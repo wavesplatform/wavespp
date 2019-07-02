@@ -16,6 +16,8 @@ set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} /usr/local "${CMAKE_SOURCE_DIR}/CMake
 
 include_directories("src")
 file(GLOB WAVESPP_SRC "src/*.cpp" "src/tx/*.cpp")
+file(GLOB WAVESPP_HEADERS "src/*.hpp" "src/*.h" "src/*.hpp" "src/tx/*.hpp")
+set(WAVESPP_HEADERS ${WAVESPP_HEADERS} "${include_out_dir}/version.h")
 
 find_package(WAVES_C CONFIG REQUIRED)
 include_directories(${WAVES_C_INCLUDE_DIRS})
@@ -25,12 +27,12 @@ include_directories(${CODA_INCLUDE_DIRS})
 
 add_library(wavespp STATIC ${WAVESPP_SRC})
 target_link_libraries(wavespp ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES})
-set_target_properties(wavespp PROPERTIES PUBLIC_HEADER "${include_out_dir}/version.h")
+set_target_properties(wavespp PROPERTIES PUBLIC_HEADER "${WAVESPP_HEADERS}")
 
 add_library(wavespp_shared SHARED ${WAVESPP_SRC})
 set_target_properties(wavespp_shared PROPERTIES
     OUTPUT_NAME wavespp
-    PUBLIC_HEADER "${include_out_dir}/version.h")
+    PUBLIC_HEADER "${WAVESPP_HEADERS}")
 target_link_libraries(wavespp_shared ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES})
 
 install(TARGETS wavespp wavespp_shared
