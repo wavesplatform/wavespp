@@ -18,6 +18,11 @@ void BuilderFlagsChecker::set(BuilderFlags flag)
     _flags &= ~(uint64_t(1) << static_cast<int>(flag));
 }
 
+bool BuilderFlagsChecker::get(BuilderFlags flag)
+{
+    return (_flags >> static_cast<int>(flag)) & 1;
+}
+
 bool BuilderFlagsChecker::check()
 {
     return _flags == 0;
@@ -30,6 +35,10 @@ void BuilderFlagsChecker::check_and_throw()
         throw coda_error("Can't build transaction");
     }
 }
+
+Transaction::Builder::Builder(std::initializer_list<BuilderFlags> flags_) :
+    _flags(flags_)
+{}
 
 Transaction::Transaction(const waves_tx_t& tx) :
     _tx(tx)

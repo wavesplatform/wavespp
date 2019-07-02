@@ -19,7 +19,8 @@ enum class BuilderFlags
     HAS_RECIPIENT = 4,
     HAS_FEE = 5,
     HAS_TIMESTAMP = 6,
-    HAS_ATTACHMENT = 7
+    HAS_ATTACHMENT = 7,
+    HAS_CHAIN_ID = 8
 };
 
 class BuilderFlagsChecker
@@ -27,6 +28,7 @@ class BuilderFlagsChecker
 public:
     BuilderFlagsChecker(std::initializer_list<BuilderFlags> flags_);
     void set(BuilderFlags flag);
+    bool get(BuilderFlags flag);
     bool check();
     void check_and_throw();
 private:
@@ -36,6 +38,15 @@ private:
 class Transaction
 {
 public:
+    class Builder
+    {
+    public:
+        Builder(std::initializer_list<BuilderFlags> flags_);
+        virtual std::shared_ptr<Transaction> build() = 0;
+    protected:
+        waves_tx_t _tx;
+        BuilderFlagsChecker _flags;
+    };
     Transaction(const waves_tx_t& tx);
     virtual ~Transaction();
     const std::string& id() const;
