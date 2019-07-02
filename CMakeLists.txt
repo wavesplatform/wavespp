@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.9)
 
-set(PROJECT_VERSION_STRING 1.0.0.1)
-set(PROJECT_VERSION_NUMBER 0x01000001)
+set(PROJECT_VERSION_STRING 1.0.0.2)
+set(PROJECT_VERSION_NUMBER 0x01000002)
 project(wavespp
     VERSION ${PROJECT_VERSION_STRING}
     DESCRIPTION "C++ library to work with waves transactions"
