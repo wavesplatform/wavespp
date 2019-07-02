@@ -1,17 +1,35 @@
-cmake_minimum_required(VERSION 3.0)
-project(wavespp)
+cmake_minimum_required(VERSION 3.9)
+
+set(PROJECT_VERSION_STRING 1.0.0.1)
+set(PROJECT_VERSION_NUMBER 0x01000001)
+project(wavespp
+    VERSION ${PROJECT_VERSION_STRING}
+    DESCRIPTION "C++ library to work with waves transactions"
+    LANGUAGES C CXX)
+configure_file("src/version.h.in" "version.h")
+project(wavespp VERSION)
+
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${CMAKE_CURRENT_SOURCE_DIR}/CMake/modules")
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} /usr/local "${CMAKE_SOURCE_DIR}/CMake/modules")
 
 include_directories("src")
 file(GLOB WAVESPP_SRC "src/*.cpp" "src/tx/*.cpp")
 
-LINK_DIRECTORIES("/usr/local/lib/waves/")
+find_package(WAVES_C CONFIG REQUIRED)
+include_directories(${WAVES_C_INCLUDE_DIRS})
+
+find_package(CODA CONFIG REQUIRED)
+include_directories(${CODA_INCLUDE_DIRS})
 
 add_library(wavespp STATIC ${WAVESPP_SRC})
-target_link_libraries(wavespp waves_c coda)
+target_link_libraries(wavespp ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES})
+set_target_properties(wavespp PROPERTIES PUBLIC_HEADER "version.h")
 
 add_library(wavespp_shared SHARED ${WAVESPP_SRC})
-set_target_properties(wavespp_shared PROPERTIES OUTPUT_NAME wavespp)
-target_link_libraries(wavespp_shared waves_c coda)
+set_target_properties(wavespp_shared PROPERTIES
+    OUTPUT_NAME wavespp
+    PUBLIC_HEADER "version.h")
+target_link_libraries(wavespp_shared ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES})
 
 install(TARGETS wavespp wavespp_shared
         ARCHIVE DESTINATION lib/wavespp

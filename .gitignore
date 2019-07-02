@@ -1,0 +1,13 @@
+*~
+*.zip
+*.gz
+*.Z
+*.log
+*.sw[op]
+*.orig
+*.reject
+/CMakeCache.txt
+/CMakeFiles/
+/TAGS
+/tags
+/build
