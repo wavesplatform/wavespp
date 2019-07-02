@@ -6,7 +6,9 @@ project(wavespp
     VERSION ${PROJECT_VERSION_STRING}
     DESCRIPTION "C++ library to work with waves transactions"
     LANGUAGES C CXX)
-configure_file("src/version.h.in" "version.h")
+set(include_out_dir "${CMAKE_CURRENT_BINARY_DIR}/include")
+file(MAKE_DIRECTORY "${include_out_dir}")
+configure_file("src/version.h.in" "${include_out_dir}/version.h")
 project(wavespp VERSION)
 
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${CMAKE_CURRENT_SOURCE_DIR}/CMake/modules")
@@ -23,12 +25,12 @@ include_directories(${CODA_INCLUDE_DIRS})
 
 add_library(wavespp STATIC ${WAVESPP_SRC})
 target_link_libraries(wavespp ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES})
-set_target_properties(wavespp PROPERTIES PUBLIC_HEADER "version.h")
+set_target_properties(wavespp PROPERTIES PUBLIC_HEADER "${include_out_dir}/version.h")
 
 add_library(wavespp_shared SHARED ${WAVESPP_SRC})
 set_target_properties(wavespp_shared PROPERTIES
     OUTPUT_NAME wavespp
-    PUBLIC_HEADER "version.h")
+    PUBLIC_HEADER "${include_out_dir}/version.h")
 target_link_libraries(wavespp_shared ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES})
 
 install(TARGETS wavespp wavespp_shared
