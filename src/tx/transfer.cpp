@@ -13,14 +13,13 @@ TransferTransaction::Builder::Builder() :
            BuilderFlags::HAS_CHAIN_ID
     })
 {
-    _tx = *waves_tx_new(TRANSACTION_TYPE_TRANSFER);
 }
 
 TransferTransaction::Builder&
 TransferTransaction::Builder::setPublicKey(const std::string& v)
 {
     _flags.set(BuilderFlags::HAS_PUBLIC_KEY);
-    waves_tx_set_public_key_bytes(&_tx.data.transfer.sender_public_key, v.c_str());
+    _sender_public_key = v;
     return *this;
 }
 
@@ -28,11 +27,7 @@ TransferTransaction::Builder&
 TransferTransaction::Builder::setChainId(uint8_t chain_id)
 {
     _flags.set(BuilderFlags::HAS_CHAIN_ID);
-    bool has_recipient = _flags.get(BuilderFlags::HAS_RECIPIENT);
-    if (!has_recipient || (has_recipient && _tx.data.transfer.recipient.is_alias))
-    {
-        _tx.data.transfer.recipient.data.alias.chain_id = chain_id;
-    }
+    _chain_id = chain_id;
     return *this;
 }
 
@@ -40,7 +35,7 @@ TransferTransaction::Builder&
 TransferTransaction::Builder::setAssetId(const std::string& v)
 {
     _flags.set(BuilderFlags::HAS_ASSET_ID);
-    waves_tx_set_asset_id_bytes(&_tx.data.transfer.asset_id, v.c_str());
+    _asset_id = v;
     return *this;
 }
 
@@ -48,15 +43,15 @@ TransferTransaction::Builder&
 TransferTransaction::Builder::setFeeAssetId(const std::string& v)
 {
     _flags.set(BuilderFlags::HAS_FEE_ASSET_ID);
-    waves_tx_set_asset_id_bytes(&_tx.data.transfer.fee_asset_id, v.c_str());
+    _fee_asset_id = v;
     return *this;
 }
 
 TransferTransaction::Builder&
-TransferTransaction::Builder::setAmount(tx_amount_t amount_)
+TransferTransaction::Builder::setAmount(tx_amount_t amount)
 {
     _flags.set(BuilderFlags::HAS_AMOUNT);
-    _tx.data.transfer.amount = amount_;
+    _amount = amount;
     return *this;
 }
 
@@ -64,8 +59,7 @@ TransferTransaction::Builder&
 TransferTransaction::Builder::setAddress(const std::string& v)
 {
     _flags.set(BuilderFlags::HAS_RECIPIENT);
-    _tx.data.transfer.recipient.is_alias = false;
-    waves_tx_set_address_bytes(&_tx.data.transfer.recipient.data.address, v.c_str());
+    _address = v;
     return *this;
 }
 
@@ -73,24 +67,24 @@ TransferTransaction::Builder&
 TransferTransaction::Builder::setAlias(const std::string& v)
 {
     _flags.set(BuilderFlags::HAS_RECIPIENT);
-    _tx.data.transfer.recipient.is_alias = true;
-    waves_tx_set_string(&_tx.data.transfer.recipient.data.alias.alias, v.c_str());
+    _is_alias = true;
+    _alias = v;
     return *this;
 }
 
 TransferTransaction::Builder&
-TransferTransaction::Builder::setFee(tx_fee_t fee_)
+TransferTransaction::Builder::setFee(tx_fee_t fee)
 {
     _flags.set(BuilderFlags::HAS_FEE);
-    _tx.data.transfer.fee = fee_;
+    _fee = fee;
     return *this;
 }
 
 TransferTransaction::Builder&
-TransferTransaction::Builder::setTimestamp(tx_timestamp_t timestamp_)
+TransferTransaction::Builder::setTimestamp(tx_timestamp_t timestamp)
 {
     _flags.set(BuilderFlags::HAS_TIMESTAMP);
-    _tx.data.transfer.timestamp = timestamp_;
+    _timestamp = timestamp;
     return *this;
 }
 
@@ -98,28 +92,52 @@ TransferTransaction::Builder&
 TransferTransaction::Builder::setAttachment(const std::string& v)
 {
     _flags.set(BuilderFlags::HAS_ATTACHMENT);
-    tx_set_encoded_string_bytes(&_tx.data.transfer.attachment, v.c_str(), v.size());
+    _attachment = v;
     return *this;
 }
 
 TransactionPtr TransferTransaction::Builder::build()
 {
     _flags.check_and_throw();
-    return std::make_shared<TransferTransaction>(_tx);
+    auto tx = waves_tx_new(TRANSACTION_TYPE_TRANSFER);
+    waves_tx_set_public_key_bytes(&tx->data.transfer.sender_public_key, _sender_public_key.c_str());
+    if (!_asset_id.empty())
+    {
+        waves_tx_set_asset_id_bytes(&tx->data.transfer.asset_id, _asset_id.c_str());
+    }
+    if (!_fee_asset_id.empty())
+    {
+        waves_tx_set_asset_id_bytes(&tx->data.transfer.fee_asset_id, _fee_asset_id.c_str());
+    }
+    tx->data.transfer.amount = _amount;
+    tx->data.transfer.recipient.is_alias = _is_alias;
+    if (_is_alias)
+    {
+        tx->data.transfer.recipient.data.alias.chain_id = _chain_id;
+        waves_tx_set_string(&tx->data.transfer.recipient.data.alias.alias, _alias.c_str());
+    }
+    else
+    {
+        waves_tx_set_address_bytes(&tx->data.transfer.recipient.data.address, _address.c_str());
+    }
+    tx->data.transfer.fee = _fee;
+    tx->data.transfer.timestamp = _timestamp;
+    tx_set_encoded_string_bytes(&tx->data.transfer.attachment, _attachment.c_str(), _attachment.size());
+    return std::make_shared<TransferTransaction>(tx);
 }
 
-TransferTransaction::TransferTransaction(const waves_tx_t& tx) :
+TransferTransaction::TransferTransaction(waves_tx_t* tx) :
     Transaction(tx)
 {}
 
 tx_fee_t TransferTransaction::fee() const
 {
-    return _tx.data.transfer.fee;
+    return _tx->data.transfer.fee;
 }
 
 tx_timestamp_t TransferTransaction::timestamp() const
 {
-    return _tx.data.transfer.timestamp;
+    return _tx->data.transfer.timestamp;
 }
 
 }

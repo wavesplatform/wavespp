@@ -20,7 +20,13 @@ enum class BuilderFlags
     HAS_FEE = 5,
     HAS_TIMESTAMP = 6,
     HAS_ATTACHMENT = 7,
-    HAS_CHAIN_ID = 8
+    HAS_CHAIN_ID = 8,
+    HAS_QUANTITY = 9,
+    HAS_DECIMALS = 10,
+    HAS_REISSUABLE = 11,
+    HAS_SCRIPT = 12,
+    HAS_NAME = 13,
+    HAS_DESCRIPTION = 14
 };
 
 class BuilderFlagsChecker
@@ -42,21 +48,22 @@ public:
     {
     public:
         Builder(std::initializer_list<BuilderFlags> flags_);
+        ~Builder();
         virtual std::shared_ptr<Transaction> build() = 0;
     protected:
-        waves_tx_t _tx;
         BuilderFlagsChecker _flags;
     };
-    Transaction(const waves_tx_t& tx);
+    Transaction(waves_tx_t *tx);
     virtual ~Transaction();
     const std::string& id() const;
     const std::vector<uint8_t>& bytes() const;
+
     virtual tx_fee_t fee() const = 0;
     virtual tx_timestamp_t timestamp() const = 0;
 protected:
     mutable std::string _id;
     mutable std::vector<uint8_t> _bytes;
-    waves_tx_t _tx;
+    waves_tx_t* _tx;
 };
 
 typedef std::shared_ptr<Transaction> TransactionPtr;

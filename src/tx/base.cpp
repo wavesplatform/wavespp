@@ -1,4 +1,9 @@
+#include <functional>
+
 #include "base.hpp"
+#include "burn.hpp"
+#include "transfer.hpp"
+
 #include <waves/b58.h>
 #include <coda/error.hpp>
 
@@ -40,13 +45,13 @@ Transaction::Builder::Builder(std::initializer_list<BuilderFlags> flags_) :
     _flags(flags_)
 {}
 
-Transaction::Transaction(const waves_tx_t& tx) :
+Transaction::Transaction(waves_tx_t* tx) :
     _tx(tx)
 {}
 
 Transaction::~Transaction()
 {
-    waves_tx_destroy(&_tx);
+    waves_tx_destroy(_tx);
 }
 
 const std::string& Transaction::id() const
@@ -67,9 +72,9 @@ const std::vector<uint8_t>& Transaction::bytes() const
 {
     if (_bytes.empty())
     {
-        size_t buf_size = waves_tx_buffer_size(&_tx);
+        size_t buf_size = waves_tx_buffer_size(_tx);
         _bytes.resize(buf_size);
-        waves_tx_to_bytes(_bytes.data(), &_tx);
+        waves_tx_to_bytes(_bytes.data(), _tx);
     }
     return _bytes;
 }
