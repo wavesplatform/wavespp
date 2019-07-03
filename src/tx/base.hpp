@@ -48,7 +48,7 @@ public:
     {
     public:
         Builder(std::initializer_list<BuilderFlags> flags_);
-        ~Builder();
+        virtual ~Builder() {}
         virtual std::shared_ptr<Transaction> build() = 0;
     protected:
         BuilderFlagsChecker _flags;

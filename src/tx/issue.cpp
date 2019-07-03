@@ -2,6 +2,21 @@
 
 namespace waves {
 
+IssueTransaction::Builder::Builder() :
+    Transaction::Builder({
+           BuilderFlags::HAS_PUBLIC_KEY,
+           BuilderFlags::HAS_CHAIN_ID,
+           BuilderFlags::HAS_NAME,
+           BuilderFlags::HAS_DESCRIPTION,
+           BuilderFlags::HAS_DECIMALS,
+           BuilderFlags::HAS_REISSUABLE,
+           BuilderFlags::HAS_QUANTITY,
+           BuilderFlags::HAS_FEE,
+           BuilderFlags::HAS_TIMESTAMP,
+           BuilderFlags::HAS_SCRIPT
+    })
+{}
+
 IssueTransaction::Builder&
 IssueTransaction::Builder::setChainId(tx_chain_id_t chain_id)
 {
