@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.9)
 
-set(PROJECT_VERSION_STRING 1.0.0.3)
-set(PROJECT_VERSION_NUMBER 0x01000003)
+set(PROJECT_VERSION_STRING 1.0.0.4)
+set(PROJECT_VERSION_NUMBER 0x01000004)
 project(wavespp
     VERSION ${PROJECT_VERSION_STRING}
     DESCRIPTION "C++ library to work with waves transactions"
@@ -18,6 +18,7 @@ include_directories("src")
 file(GLOB WAVESPP_SRC "src/*.cpp" "src/tx/*.cpp")
 file(GLOB WAVESPP_HEADERS "src/*.hpp" "src/*.h" "src/*.hpp" "src/tx/*.hpp")
 set(WAVESPP_HEADERS ${WAVESPP_HEADERS} "${include_out_dir}/version.h")
+include_directories("${include_out_dir}")
 
 find_package(WAVES_C CONFIG REQUIRED)
 include_directories(${WAVES_C_INCLUDE_DIRS})
