@@ -17,17 +17,20 @@ find_path(CODA_INCLUDE_DIR
     PATH_SUFFIXES include)
 
 if(MSVC)
-    find_library(CODA_LIBRARY_RELEASE coda
+    find_library(CODA_LIBRARY_RELEASE
+        NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}coda${CMAKE_STATIC_LIBRARY_SUFFIX} coda
         PATHS ${CODA_ROOT_DIR}
         PATH_SUFFIXES Release)
 
-    find_library(CODA_LIBRARY_DEBUG coda
+    find_library(CODA_LIBRARY_DEBUG
+        NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}coda${CMAKE_STATIC_LIBRARY_SUFFIX} coda
         PATHS ${CODA_ROOT_DIR}
         PATH_SUFFIXES Debug)
 
     set(CODA_LIBRARY optimized ${CODA_LIBRARY_RELEASE} debug ${CODA_LIBRARY_DEBUG})
 else()
-    find_library(CODA_LIBRARY coda
+    find_library(CODA_LIBRARY
+        NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}coda${CMAKE_STATIC_LIBRARY_SUFFIX} coda
         PATHS ${CODA_ROOT_DIR}
         PATH_SUFFIXES lib lib64)
 endif()

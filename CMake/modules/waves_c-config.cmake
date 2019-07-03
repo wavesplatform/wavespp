@@ -17,17 +17,20 @@ find_path(WAVES_C_INCLUDE_DIR
     PATH_SUFFIXES include)
 
 if(MSVC)
-    find_library(WAVES_C_LIBRARY_RELEASE waves_c
+    find_library(WAVES_C_LIBRARY_RELEASE
+        NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}waves_c${CMAKE_STATIC_LIBRARY_SUFFIX} waves_c
         PATHS ${WAVES_C_ROOT_DIR}
         PATH_SUFFIXES Release)
 
-    find_library(WAVES_C_LIBRARY_DEBUG waves_c
+    find_library(WAVES_C_LIBRARY_DEBUG
+        NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}waves_c${CMAKE_STATIC_LIBRARY_SUFFIX} waves_c
         PATHS ${WAVES_C_ROOT_DIR}
         PATH_SUFFIXES Debug)
 
     set(WAVES_C_LIBRARY optimized ${WAVES_C_LIBRARY_RELEASE} debug ${WAVES_C_LIBRARY_DEBUG})
 else()
-    find_library(WAVES_C_LIBRARY waves_c
+    find_library(WAVES_C_LIBRARY
+        NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}waves_c${CMAKE_STATIC_LIBRARY_SUFFIX} waves_c
         PATHS ${WAVES_C_ROOT_DIR}
         PATH_SUFFIXES lib/waves lib64/waves)
 endif()
