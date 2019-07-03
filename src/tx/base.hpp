@@ -26,7 +26,8 @@ enum class BuilderFlags
     HAS_REISSUABLE = 11,
     HAS_SCRIPT = 12,
     HAS_NAME = 13,
-    HAS_DESCRIPTION = 14
+    HAS_DESCRIPTION = 14,
+    HAS_VERSION = 15
 };
 
 class BuilderFlagsChecker

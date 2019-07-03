@@ -12,6 +12,7 @@ public:
     {
     public:
         Builder();
+        Builder& setVersion(tx_version_t version);
         Builder& setPublicKey(const std::string& v);
         Builder& setChainId(uint8_t chain_id);
         Builder& setAssetId(const std::string& v);
@@ -24,6 +25,7 @@ public:
         Builder& setAttachment(const std::string& v);
         TransactionPtr build();
     private:
+        tx_version_t _version;
         std::string _sender_public_key;
         tx_chain_id_t _chain_id;
         std::string _asset_id;

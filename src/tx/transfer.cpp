@@ -4,6 +4,7 @@ namespace waves {
 
 TransferTransaction::Builder::Builder() :
     Transaction::Builder({
+           BuilderFlags::HAS_VERSION,
            BuilderFlags::HAS_PUBLIC_KEY,
            BuilderFlags::HAS_AMOUNT,
            BuilderFlags::HAS_RECIPIENT,
@@ -13,6 +14,14 @@ TransferTransaction::Builder::Builder() :
            BuilderFlags::HAS_CHAIN_ID
     })
 {
+}
+
+TransferTransaction::Builder&
+TransferTransaction::Builder::setVersion(tx_version_t version)
+{
+    _flags.set(BuilderFlags::HAS_VERSION);
+    _version = version;
+    return *this;
 }
 
 TransferTransaction::Builder&
@@ -101,6 +110,7 @@ TransactionPtr TransferTransaction::Builder::build()
 {
     _flags.check_and_throw();
     auto tx = waves_tx_new(TRANSACTION_TYPE_TRANSFER);
+    tx->data.transfer.version = _version;
     waves_tx_set_public_key_bytes(&tx->data.transfer.sender_public_key, _sender_public_key.c_str());
     if (!_asset_id.empty())
     {
