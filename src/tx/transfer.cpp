@@ -59,6 +59,7 @@ TransferTransaction::Builder&
 TransferTransaction::Builder::setAddress(const std::string& v)
 {
     _flags.set(BuilderFlags::HAS_RECIPIENT);
+     _is_alias = false;
     _address = v;
     return *this;
 }
