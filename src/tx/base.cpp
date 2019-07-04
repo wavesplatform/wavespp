@@ -59,11 +59,8 @@ const std::string& Transaction::id() const
     if (_id.empty())
     {
         const auto& bs = bytes();
-        uint8_t hash[32];
-        waves_tx_hash_bytes(hash, bs.data(), bs.size());
-        char id_buf [sizeof(hash)*2];
-        ssize_t id_sz = base58_encode(id_buf, hash, sizeof(hash));
-        _id = std::string(id_buf, id_sz);
+        _id.resize(32);
+        waves_tx_get_id((uint8_t*)_id.c_str(), bs.data(), bs.size());
     }
     return _id;
 }
