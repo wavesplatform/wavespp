@@ -19,4 +19,18 @@ std::string to_base64(const std::string& v)
     return std::string(buf);
 }
 
+std::string from_base58(const std::string& v)
+{
+    unsigned char buf[v.size()];
+    ssize_t sz = base58_decode(buf, v.c_str());
+    return std::string((char*)buf, sz);
+}
+
+std::string from_base64(const std::string& v)
+{
+    unsigned char buf[v.size()];
+    ssize_t sz = base64_decode(buf, v.c_str());
+    return std::string((char*)buf, sz);
+}
+
 }}
