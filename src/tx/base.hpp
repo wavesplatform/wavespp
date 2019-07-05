@@ -32,7 +32,17 @@ enum class BuilderFlags
     HAS_MIN_SPONSORED_ASSET_FEE = 17,
     HAS_ALIAS = 18,
     HAS_DAPP = 19,
-    HAS_FUNCTION_CALL = 20
+    HAS_FUNCTION_CALL = 20,
+    HAS_ORDER_TYPE = 21,
+    HAS_MATCHER_PUBLIC_KEY = 22,
+    HAS_PRICE = 23,
+    HAS_EXPIRATION = 24,
+    HAS_MATCHER_FEE = 25,
+    HAS_PROOFS = 26,
+    HAS_ORDER1 = 27,
+    HAS_ORDER2 = 28,
+    HAS_BUY_MATCHER_FEE = 29,
+    HAS_SELL_MATCHER_FEE = 30
 };
 
 class BuilderFlagsChecker
