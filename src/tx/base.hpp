@@ -29,7 +29,8 @@ enum class BuilderFlags
     HAS_DESCRIPTION = 14,
     HAS_VERSION = 15,
     HAS_LEASE_ID = 16,
-    HAS_MIN_SPONSORED_ASSET_FEE = 17
+    HAS_MIN_SPONSORED_ASSET_FEE = 17,
+    HAS_ALIAS = 18
 };
 
 class BuilderFlagsChecker

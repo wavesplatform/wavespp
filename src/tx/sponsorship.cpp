@@ -4,7 +4,6 @@ namespace waves {
 
 SponsorshipTransaction::Builder::Builder() :
     Transaction::Builder({
-           BuilderFlags::HAS_VERSION,
            BuilderFlags::HAS_PUBLIC_KEY,
            BuilderFlags::HAS_MIN_SPONSORED_ASSET_FEE,
            BuilderFlags::HAS_FEE,
@@ -31,7 +30,7 @@ TransactionPtr SponsorshipTransaction::Builder::build()
 {
     _flags.check_and_throw();
     auto tx = waves_tx_new(TRANSACTION_TYPE_SPONSORSHIP);
-    tx->version = _version;
+    tx->version = TX_VERSION_1;
     waves_tx_set_public_key_bytes(&tx->data.sponsorship.sender_public_key, _sender_public_key.c_str());
     if (!_asset_id.empty())
     {
