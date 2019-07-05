@@ -3,27 +3,15 @@
 
 namespace waves {
 
-Transfer::Transfer(tx_chain_id_t chain_id_, const std::string& alias_, tx_amount_t amount_) :
-    _is_alias(true),
-    _chain_id(chain_id_),
+Transfer::Transfer(const std::string& alias_, tx_amount_t amount_, bool is_alias) :
+    _is_alias(is_alias),
     _data(alias_),
-    _amount(amount_)
-{}
-
-Transfer::Transfer(const std::string& address_, tx_amount_t amount_) :
-    _is_alias(false),
-    _data(address_),
     _amount(amount_)
 {}
 
 bool Transfer::isAlias() const
 {
     return _is_alias;
-}
-
-tx_chain_id_t Transfer::chainId() const
-{
-    return _chain_id;
 }
 
 const std::string& Transfer::address() const
@@ -38,6 +26,7 @@ tx_amount_t Transfer::amount() const
 
 MassTransferTransaction::Builder::Builder() :
     Transaction::Builder({
+           BuilderFlags::HAS_CHAIN_ID,
            BuilderFlags::HAS_PUBLIC_KEY,
            BuilderFlags::HAS_FEE,
            BuilderFlags::HAS_TIMESTAMP,
@@ -49,14 +38,14 @@ MassTransferTransaction::Builder::Builder() :
 MassTransferTransaction::Builder&
 MassTransferTransaction::Builder::addTransferByAddress(const std::string& address, tx_amount_t amount)
 {
-    _transfers.emplace_back(Transfer(address, amount));
+    _transfers.emplace_back(Transfer(address, amount, false));
     return *this;
 }
 
 MassTransferTransaction::Builder&
-MassTransferTransaction::Builder::addTransferByAlias(tx_chain_id_t chain_id, const std::string& alias, tx_amount_t amount)
+MassTransferTransaction::Builder::addTransferByAlias(const std::string& alias, tx_amount_t amount)
 {
-    _transfers.emplace_back(Transfer(chain_id, alias, amount));
+    _transfers.emplace_back(Transfer(alias, amount, true));
     return *this;
 }
 
@@ -94,12 +83,12 @@ TransactionPtr MassTransferTransaction::Builder::build()
         e->recipient.is_alias = transfer.isAlias();
         if (transfer.isAlias())
         {
-            e->recipient.data.alias.chain_id = transfer.chainId();
+            e->recipient.data.alias.chain_id = _chain_id;
             waves_tx_set_string(&e->recipient.data.alias.alias, transfer.address().c_str());
         }
         else
         {
-            auto address = waves::utils::secure_hash_to_address(transfer.address().c_str(), TX_VERSION_1, transfer.chainId());
+            auto address = waves::utils::secure_hash_to_address(transfer.address().c_str(), TX_VERSION_1, _chain_id);
             waves_tx_set_address_bytes(&e->recipient.data.address, address.c_str());
         }
     }

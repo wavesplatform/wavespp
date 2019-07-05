@@ -8,15 +8,12 @@ namespace waves {
 class Transfer
 {
 public:
-    Transfer(tx_chain_id_t chain_id_, const std::string& alias_, tx_amount_t amount_);
-    Transfer(const std::string& address_, tx_amount_t amount_);
+    Transfer(const std::string& alias_, tx_amount_t amount_, bool is_alias);
     bool isAlias() const;
-    tx_chain_id_t chainId() const;
     const std::string& address() const;
     tx_amount_t amount() const;
 private:
     bool _is_alias;
-    tx_chain_id_t _chain_id;
     std::string _data;
     tx_amount_t _amount;
 };
@@ -29,7 +26,7 @@ public:
     public:
         Builder();
         Builder& addTransferByAddress(const std::string& address, tx_amount_t amount);
-        Builder& addTransferByAlias(tx_chain_id_t chain_id, const std::string& alias, tx_amount_t amount);
+        Builder& addTransferByAlias(const std::string& alias, tx_amount_t amount);
         Builder& setAssetId(const std::string& v);
         Builder& setAttachment(const std::string& v);
         TransactionPtr build();
