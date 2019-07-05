@@ -72,7 +72,7 @@ TransactionPtr IssueTransaction::Builder::build()
     auto tx = waves_tx_new(TRANSACTION_TYPE_ISSUE);
     tx->version = _version;
     tx->data.issue.chain_id = _chain_id;
-    waves_tx_set_public_key_bytes(&tx->data.transfer.sender_public_key, _sender_public_key.c_str());
+    waves_tx_set_public_key_bytes(&tx->data.issue.sender_public_key, _sender_public_key.c_str());
     waves_tx_set_string(&tx->data.issue.name, _name.c_str());
     waves_tx_set_string(&tx->data.issue.description, _description.c_str());
     tx->data.issue.quantity = _quantity;
@@ -90,12 +90,12 @@ IssueTransaction::IssueTransaction(waves_tx_t* tx) :
 
 tx_fee_t IssueTransaction::fee() const
 {
-    return _tx->data.transfer.fee;
+    return _tx->data.issue.fee;
 }
 
 tx_timestamp_t IssueTransaction::timestamp() const
 {
-    return _tx->data.transfer.timestamp;
+    return _tx->data.issue.timestamp;
 }
 
 }
