@@ -30,7 +30,9 @@ enum class BuilderFlags
     HAS_VERSION = 15,
     HAS_LEASE_ID = 16,
     HAS_MIN_SPONSORED_ASSET_FEE = 17,
-    HAS_ALIAS = 18
+    HAS_ALIAS = 18,
+    HAS_DAPP = 19,
+    HAS_FUNCTION_CALL = 20
 };
 
 class BuilderFlagsChecker
