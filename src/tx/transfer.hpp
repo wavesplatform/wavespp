@@ -18,7 +18,7 @@ public:
         Builder& setAssetId(const std::string& v);
         Builder& setFeeAssetId(const std::string& v);
         Builder& setAmount(tx_amount_t amount);
-        Builder& setAddress(const std::string& v);
+        Builder& setRecipientPublicKeyHash(const std::string& v);
         Builder& setAlias(const std::string& v);
         Builder& setFee(tx_fee_t fee);
         Builder& setTimestamp(tx_timestamp_t timestamp);
@@ -32,7 +32,7 @@ public:
         std::string _fee_asset_id;
         tx_amount_t _amount;
         bool _is_alias;
-        std::string _address;
+        std::string _recipient_public_key_hash;
         std::string _alias;
         tx_fee_t _fee;
         tx_timestamp_t _timestamp;

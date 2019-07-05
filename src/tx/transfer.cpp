@@ -1,4 +1,5 @@
 #include "transfer.hpp"
+#include "utils.hpp"
 
 namespace waves {
 
@@ -65,11 +66,11 @@ TransferTransaction::Builder::setAmount(tx_amount_t amount)
 }
 
 TransferTransaction::Builder&
-TransferTransaction::Builder::setAddress(const std::string& v)
+TransferTransaction::Builder::setRecipientPublicKeyHash(const std::string& v)
 {
     _flags.set(BuilderFlags::HAS_RECIPIENT);
     _is_alias = false;
-    _address = v;
+    _recipient_public_key_hash = v;
     return *this;
 }
 
@@ -129,7 +130,8 @@ TransactionPtr TransferTransaction::Builder::build()
     }
     else
     {
-        waves_tx_set_address_bytes(&tx->data.transfer.recipient.data.address, _address.c_str());
+        auto address = waves::utils::secure_hash_to_address(_recipient_public_key_hash, _version, _chain_id);
+        waves_tx_set_address_bytes(&tx->data.transfer.recipient.data.address, address.c_str());
     }
     tx->data.transfer.fee = _fee;
     tx->data.transfer.timestamp = _timestamp;
