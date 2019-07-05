@@ -18,30 +18,6 @@ TransferTransaction::Builder::Builder() :
 }
 
 TransferTransaction::Builder&
-TransferTransaction::Builder::setVersion(tx_version_t version)
-{
-    _flags.set(BuilderFlags::HAS_VERSION);
-    _version = version;
-    return *this;
-}
-
-TransferTransaction::Builder&
-TransferTransaction::Builder::setPublicKey(const std::string& v)
-{
-    _flags.set(BuilderFlags::HAS_PUBLIC_KEY);
-    _sender_public_key = v;
-    return *this;
-}
-
-TransferTransaction::Builder&
-TransferTransaction::Builder::setChainId(uint8_t chain_id)
-{
-    _flags.set(BuilderFlags::HAS_CHAIN_ID);
-    _chain_id = chain_id;
-    return *this;
-}
-
-TransferTransaction::Builder&
 TransferTransaction::Builder::setAssetId(const std::string& v)
 {
     _flags.set(BuilderFlags::HAS_ASSET_ID);
@@ -80,22 +56,6 @@ TransferTransaction::Builder::setAlias(const std::string& v)
     _flags.set(BuilderFlags::HAS_RECIPIENT);
     _is_alias = true;
     _alias = v;
-    return *this;
-}
-
-TransferTransaction::Builder&
-TransferTransaction::Builder::setFee(tx_fee_t fee)
-{
-    _flags.set(BuilderFlags::HAS_FEE);
-    _fee = fee;
-    return *this;
-}
-
-TransferTransaction::Builder&
-TransferTransaction::Builder::setTimestamp(tx_timestamp_t timestamp)
-{
-    _flags.set(BuilderFlags::HAS_TIMESTAMP);
-    _timestamp = timestamp;
     return *this;
 }
 

@@ -4,6 +4,7 @@ namespace waves {
 
 BurnTransaction::Builder::Builder() :
     Transaction::Builder({
+           BuilderFlags::HAS_VERSION,
            BuilderFlags::HAS_PUBLIC_KEY,
            BuilderFlags::HAS_CHAIN_ID,
            BuilderFlags::HAS_QUANTITY,
@@ -13,26 +14,10 @@ BurnTransaction::Builder::Builder() :
 {}
 
 BurnTransaction::Builder&
-BurnTransaction::Builder::setSenderPublicKey(const std::string& v)
-{
-    _flags.set(BuilderFlags::HAS_PUBLIC_KEY);
-    _sender_public_key = v;
-    return *this;
-}
-
-BurnTransaction::Builder&
 BurnTransaction::Builder::setAssetId(const std::string& v)
 {
     _flags.set(BuilderFlags::HAS_ASSET_ID);
     _asset_id = v;
-    return *this;
-}
-
-BurnTransaction::Builder&
-BurnTransaction::Builder::setChainId(uint8_t chain_id)
-{
-    _flags.set(BuilderFlags::HAS_CHAIN_ID);
-
     return *this;
 }
 
@@ -44,22 +29,6 @@ BurnTransaction::Builder::setQuantity(tx_quantity_t quantity)
     return *this;
 }
 
-BurnTransaction::Builder&
-BurnTransaction::Builder::setFee(tx_fee_t fee)
-{
-    _flags.set(BuilderFlags::HAS_FEE);
-    _fee = fee;
-    return *this;
-}
-
-BurnTransaction::Builder&
-BurnTransaction::Builder::setTimestamp(tx_timestamp_t timestamp)
-{
-    _flags.set(BuilderFlags::HAS_TIMESTAMP);
-    _timestamp = timestamp;
-    return *this;
-}
-
 BurnTransaction::BurnTransaction(waves_tx_t* tx) :
     Transaction(tx)
 {}
@@ -68,6 +37,7 @@ TransactionPtr BurnTransaction::Builder::build()
 {
     _flags.check_and_throw();
     auto tx = waves_tx_new(TRANSACTION_TYPE_BURN);
+    tx->version = _version;
     waves_tx_set_public_key_bytes(&tx->data.burn.sender_public_key, _sender_public_key.c_str());
     if (!_asset_id.empty())
     {

@@ -12,14 +12,11 @@ public:
     {
     public:
         Builder();
-        Builder& setSenderPublicKey(const std::string& v);
         Builder& setAssetId(const std::string& v);
-        Builder& setChainId(tx_chain_id_t chain_id);
         Builder& setQuantity(tx_quantity_t quantity);
-        Builder& setFee(tx_fee_t fee);
-        Builder& setTimestamp(tx_timestamp_t timestamp);
         TransactionPtr build();
     private:
+        tx_version_t _version;
         std::string _sender_public_key;
         std::string _asset_id;
         tx_chain_id_t _chain_id;

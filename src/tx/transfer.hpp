@@ -11,22 +11,17 @@ public:
     class Builder : public Transaction::Builder
     {
     public:
-        Builder();
-        Builder& setVersion(tx_version_t version);
-        Builder& setPublicKey(const std::string& v);
-        Builder& setChainId(uint8_t chain_id);
+        Builder();        
         Builder& setAssetId(const std::string& v);
         Builder& setFeeAssetId(const std::string& v);
         Builder& setAmount(tx_amount_t amount);
         Builder& setRecipientPublicKeyHash(const std::string& v);
         Builder& setAlias(const std::string& v);
-        Builder& setFee(tx_fee_t fee);
-        Builder& setTimestamp(tx_timestamp_t timestamp);
         Builder& setAttachment(const std::string& v);
         TransactionPtr build();
     private:
         tx_version_t _version;
-        std::string _sender_public_key;
+
         tx_chain_id_t _chain_id;
         std::string _asset_id;
         std::string _fee_asset_id;

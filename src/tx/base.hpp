@@ -50,9 +50,19 @@ public:
     public:
         Builder(std::initializer_list<BuilderFlags> flags_);
         virtual ~Builder() {}
+        virtual Builder& setVersion(tx_version_t version);
+        virtual Builder& setSenderPublicKey(const std::string& v);
+        virtual Builder& setChainId(uint8_t chain_id);
+        virtual Builder& setFee(tx_fee_t fee);
+        virtual Builder& setTimestamp(tx_timestamp_t timestamp);
         virtual std::shared_ptr<Transaction> build() = 0;
     protected:
         BuilderFlagsChecker _flags;
+        tx_version_t _version;
+        std::string _sender_public_key;
+        tx_chain_id_t _chain_id;
+        tx_fee_t _fee;
+        tx_timestamp_t _timestamp;
     };
     Transaction(waves_tx_t *tx);
     virtual ~Transaction();

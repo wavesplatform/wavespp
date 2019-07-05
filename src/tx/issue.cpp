@@ -4,6 +4,7 @@ namespace waves {
 
 IssueTransaction::Builder::Builder() :
     Transaction::Builder({
+           BuilderFlags::HAS_VERSION,
            BuilderFlags::HAS_PUBLIC_KEY,
            BuilderFlags::HAS_CHAIN_ID,
            BuilderFlags::HAS_NAME,
@@ -16,22 +17,6 @@ IssueTransaction::Builder::Builder() :
            BuilderFlags::HAS_SCRIPT
     })
 {}
-
-IssueTransaction::Builder&
-IssueTransaction::Builder::setChainId(tx_chain_id_t chain_id)
-{
-    _flags.set(BuilderFlags::HAS_CHAIN_ID);
-    _chain_id = chain_id;
-    return *this;
-}
-
-IssueTransaction::Builder&
-IssueTransaction::Builder::setSenderPublicKey(const std::string& v)
-{
-    _flags.set(BuilderFlags::HAS_PUBLIC_KEY);
-    _sender_public_key = v;
-    return *this;
-}
 
 IssueTransaction::Builder&
 IssueTransaction::Builder::setName(const std::string& v)
@@ -74,22 +59,6 @@ IssueTransaction::Builder::setReissuable(bool reissuable)
 }
 
 IssueTransaction::Builder&
-IssueTransaction::Builder::setFee(tx_fee_t fee)
-{
-    _flags.set(BuilderFlags::HAS_FEE);
-    _fee = fee;
-    return *this;
-}
-
-IssueTransaction::Builder&
-IssueTransaction::Builder::setTimestamp(tx_timestamp_t timestamp)
-{
-    _flags.set(BuilderFlags::HAS_TIMESTAMP);
-    _timestamp = timestamp;
-    return *this;
-}
-
-IssueTransaction::Builder&
 IssueTransaction::Builder::setScript(const std::string& v)
 {
     _flags.set(BuilderFlags::HAS_SCRIPT);
@@ -101,6 +70,7 @@ TransactionPtr IssueTransaction::Builder::build()
 {
     _flags.check_and_throw();
     auto tx = waves_tx_new(TRANSACTION_TYPE_ISSUE);
+    tx->version = _version;
     tx->data.issue.chain_id = _chain_id;
     waves_tx_set_public_key_bytes(&tx->data.transfer.sender_public_key, _sender_public_key.c_str());
     waves_tx_set_string(&tx->data.issue.name, _name.c_str());
@@ -127,6 +97,5 @@ tx_timestamp_t IssueTransaction::timestamp() const
 {
     return _tx->data.transfer.timestamp;
 }
-
 
 }

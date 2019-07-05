@@ -12,18 +12,15 @@ public:
     {
     public:
         Builder();
-        Builder& setChainId(tx_chain_id_t chain_id);
-        Builder& setSenderPublicKey(const std::string& v);
         Builder& setName(const std::string& v);
         Builder& setDescription(const std::string& v);
         Builder& setQuantity(tx_quantity_t quantity);
         Builder& setDecimals(tx_decimals_t decimals);
         Builder& setReissuable(bool reissuable);
-        Builder& setFee(tx_fee_t fee);
-        Builder& setTimestamp(tx_timestamp_t timestamp);
         Builder& setScript(const std::string& v);
         TransactionPtr build();
     private:
+        tx_version_t _version;
         tx_chain_id_t _chain_id;
         std::string _sender_public_key;
         std::string _name;
