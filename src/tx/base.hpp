@@ -27,7 +27,8 @@ enum class BuilderFlags
     HAS_SCRIPT = 12,
     HAS_NAME = 13,
     HAS_DESCRIPTION = 14,
-    HAS_VERSION = 15
+    HAS_VERSION = 15,
+    HAS_LEASE_ID = 16
 };
 
 class BuilderFlagsChecker

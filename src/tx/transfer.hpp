@@ -20,17 +20,12 @@ public:
         Builder& setAttachment(const std::string& v);
         TransactionPtr build();
     private:
-        tx_version_t _version;
-
-        tx_chain_id_t _chain_id;
         std::string _asset_id;
         std::string _fee_asset_id;
         tx_amount_t _amount;
         bool _is_alias;
         std::string _recipient_public_key_hash;
         std::string _alias;
-        tx_fee_t _fee;
-        tx_timestamp_t _timestamp;
         std::string _attachment;
     };
 

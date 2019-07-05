@@ -18,16 +18,11 @@ public:
         Builder& setAmount(tx_amount_t amount);
         TransactionPtr build();
     private:
-        tx_version_t _version;
         std::string _lease_asset_id;
-        std::string _sender_public_key;
-        tx_chain_id_t _chain_id;
         bool _is_alias;
         std::string _recipient_public_key_hash;
         std::string _alias;
         tx_amount_t _amount;
-        tx_fee_t _fee;
-        tx_timestamp_t _timestamp;
     };
 
     LeaseTransaction(waves_tx_t *tx);
