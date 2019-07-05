@@ -28,10 +28,6 @@ DataTransaction::Builder::Builder() :
     })
 {}
 
-DataTransaction::DataTransaction(waves_tx_t* tx) :
-    Transaction(tx)
-{}
-
 DataTransaction::Builder&
 DataTransaction::Builder::addBoolEntry(const std::string& key, bool value)
 {
@@ -92,6 +88,10 @@ TransactionPtr DataTransaction::Builder::build()
     return std::make_shared<DataTransaction>(tx);
 }
 
+DataTransaction::DataTransaction(waves_tx_t* tx) :
+    Transaction(tx)
+{}
+
 tx_fee_t DataTransaction::fee() const
 {
     return _tx->data.data.fee;
@@ -101,6 +101,5 @@ tx_timestamp_t DataTransaction::timestamp() const
 {
     return _tx->data.data.timestamp;
 }
-
 
 }
