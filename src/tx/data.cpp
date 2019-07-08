@@ -8,7 +8,7 @@ DataValue::DataValue(bool v)
     boolean = v;
 }
 
-DataValue::DataValue(uint64_t v)
+DataValue::DataValue(int64_t v)
 {
     type = TX_DATA_TYPE_INTEGER;
     integer = v;
@@ -36,7 +36,7 @@ DataTransaction::Builder::addBoolEntry(const std::string& key, bool value)
 }
 
 DataTransaction::Builder&
-DataTransaction::Builder::addLongEntry(const std::string& key, uint64_t value)
+DataTransaction::Builder::addLongEntry(const std::string& key, int64_t value)
 {
     _data.emplace_back(std::make_pair(key, DataValue(value)));
     return *this;
@@ -72,7 +72,7 @@ TransactionPtr DataTransaction::Builder::build()
                 waves_tx_data_add_entry_boolean(tx, key.c_str(), data_value.boolean);
                 break;
             case TX_DATA_TYPE_INTEGER:
-                waves_tx_data_add_entry_integer(tx, key.c_str(), data_value.integer);
+                waves_tx_data_add_entry_integer(tx, key.c_str(), uint64_t(data_value.integer));
                 break;
             case TX_DATA_TYPE_STRING:
                 waves_tx_data_add_entry_string(tx, key.c_str(), data_value.str.c_str());

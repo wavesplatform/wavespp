@@ -9,12 +9,12 @@ namespace waves {
 struct DataValue
 {
     DataValue(bool v);
-    DataValue(uint64_t v);
+    DataValue(int64_t v);
     DataValue(const std::string& v, bool binary);
 
     uint8_t type;
     bool boolean = false;
-    uint64_t integer = 0;
+    int64_t integer = 0;
     std::string str;
 };
 
@@ -26,7 +26,7 @@ public:
     public:
         Builder();
         Builder& addBoolEntry(const std::string& key, bool value);
-        Builder& addLongEntry(const std::string& key, uint64_t value);
+        Builder& addLongEntry(const std::string& key, int64_t value);
         Builder& addStringEntry(const std::string& key, const std::string& value);
         Builder& addBinaryEntry(const std::string& key, const std::string& value);
         TransactionPtr build();
