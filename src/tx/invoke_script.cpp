@@ -86,7 +86,7 @@ TransactionPtr InvokeScriptTransaction::Builder::build()
     }
     else
     {
-        auto address = waves::utils::secure_hash_to_address(_dapp_public_key_hash, TX_VERSION_1, _chain_id);
+        auto address = waves::utils::secure_hash_to_address(_dapp_public_key_hash, _chain_id);
         waves_tx_set_address_bytes(&tx->data.invoke_script.d_app.data.address, address.c_str());
     }
     if (!_fee_asset_id.empty())

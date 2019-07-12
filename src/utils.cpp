@@ -34,18 +34,18 @@ std::string from_base64(const std::string& v)
     return std::string((char*)buf, sz);
 }
 
-std::string secure_hash_to_address(const std::string& hash, uint8_t version, uint8_t chain_id)
+std::string secure_hash_to_address(const std::string& hash, uint8_t chain_id)
 {
     std::string address;
     address.resize(26);
     uint8_t hash2[32];
     uint8_t buf[22];
-    buf[0] = version;
+    buf[0] = 1;
     buf[1] = chain_id;
     memcpy(&buf[2], hash.c_str(), 20);
     waves_secure_hash(buf, 22, hash2);
     auto address_data = (char*)address.c_str();
-    address_data[0] = version;
+    address_data[0] = 1;
     address_data[1] = chain_id;
     memcpy(&address_data[2], hash.c_str(), 20);
     memcpy(&address_data[22], hash2, 4);

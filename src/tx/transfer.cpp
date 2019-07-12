@@ -90,7 +90,7 @@ TransactionPtr TransferTransaction::Builder::build()
     }
     else
     {
-        auto address = waves::utils::secure_hash_to_address(_recipient_public_key_hash, _version, _chain_id);
+        auto address = waves::utils::secure_hash_to_address(_recipient_public_key_hash, _chain_id);
         waves_tx_set_address_bytes(&tx->data.transfer.recipient.data.address, address.c_str());
     }
     tx->data.transfer.fee = _fee;
