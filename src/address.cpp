@@ -60,6 +60,11 @@ public_key::public_key(const public_key& _pub_k)
     memcpy(_data, _pub_k._data, sizeof(_data));
 }
 
+public_key::public_key(const unsigned char (&binary_public_key)[PUBLIC_KEY_BIN_LEN])
+{
+    memcpy(_data, binary_public_key, PUBLIC_KEY_BIN_LEN);
+}
+
 bool public_key::is_set() const
 {
     size_t data_len = sizeof(_data);
@@ -106,6 +111,11 @@ address::address(const char* _str)
 address::address(const public_key& _pub_k, unsigned char net)
 {
     waves_public_key_to_address(_pub_k._data, net, _data);
+}
+
+address::address(const unsigned char (&binary_address)[ADDRESS_BIN_LEN])
+{
+    memcpy(_data, binary_address, ADDRESS_BIN_LEN);
 }
 
 bool address::satisfy(const public_key& _pub_k, unsigned char net)
