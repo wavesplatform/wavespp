@@ -6,7 +6,9 @@
 namespace waves {
 namespace utils {
 
+std::string to_base58(const unsigned char* v, size_t len);
 std::string to_base58(const std::string& v);
+std::string to_base64(const unsigned char* v, size_t len);
 std::string to_base64(const std::string& v);
 
 std::string from_base58(const std::string& v);

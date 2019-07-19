@@ -7,6 +7,8 @@ project(wavespp
     DESCRIPTION "C++ library to work with waves transactions"
     LANGUAGES C CXX)
 set(include_out_dir "${CMAKE_CURRENT_BINARY_DIR}/include")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(MAKE_DIRECTORY "${include_out_dir}")
 configure_file("src/version.h.in" "${include_out_dir}/version.h")
 project(wavespp VERSION)
@@ -82,5 +84,13 @@ set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CP
 
 include(CPack)
 # }}}
+
+# Tests {{{
+enable_testing()
+add_executable(test_base58 tests/test_base58.cc ${WAVESPP_SRC})
+target_include_directories(test_base58 PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/src")
+target_link_libraries(test_base58 ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES} z ssl crypto pthread dl)
+add_test(NAME base58 COMMAND test_base58)
+#}}}
 
 # vim: fdm=marker
