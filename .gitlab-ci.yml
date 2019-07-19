@@ -13,7 +13,10 @@ build:
     - make -j4
   artifacts:
     paths:
-      - mybinary
+      - libwavespp.so
+      - libwavespp.a
+      - test_base58
+      
       # depending on your build setup it's most likely a good idea to cache outputs to reduce the build time
       # cache:
       #   paths:
