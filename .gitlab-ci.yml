@@ -8,6 +8,8 @@ build:
   # instead of calling g++ directly you can also use some build toolkit like make
   before_script:
      - apt update && apt -y install cmake make
+  tags:
+    - shell
   script:
     - cmake .
     - make -j4
@@ -25,5 +27,7 @@ build:
 # run tests using the binary built before
 test:
   stage: test
+  tags:
+    - shell
   script:
     - make test
