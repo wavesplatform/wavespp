@@ -7,7 +7,7 @@ build:
   stage: build
   # instead of calling g++ directly you can also use some build toolkit like make
   before_script:
-     - apt update && apt -y install cmake make
+     - sudo apt update && sudo apt -y install cmake make
   tags:
     - shell
   script:
