@@ -9,7 +9,7 @@ build:
   before_script:
      - apt update && apt -y install cmake make
   tags:
-    - python
+    - shell
   script:
     - cmake .
     - make -j4
@@ -28,6 +28,6 @@ build:
 test:
   stage: test
   tags:
-    - python
+    - shell
   script:
     - make test
