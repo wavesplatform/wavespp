@@ -87,10 +87,17 @@ include(CPack)
 
 # Tests {{{
 enable_testing()
+
 add_executable(test_base58 tests/test_base58.cc ${WAVESPP_SRC})
 target_include_directories(test_base58 PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/src")
 target_link_libraries(test_base58 ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES} z ssl crypto pthread dl)
 add_test(NAME base58 COMMAND test_base58)
+
+add_executable(test_address tests/test_address.cc ${WAVESPP_SRC})
+target_include_directories(test_address PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/src")
+target_link_libraries(test_address ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES} z ssl crypto pthread dl)
+add_test(NAME address COMMAND test_address)
+
 #}}}
 
 # vim: fdm=marker
