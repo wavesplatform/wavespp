@@ -8,12 +8,17 @@ build:
   # instead of calling g++ directly you can also use some build toolkit like make
   before_script:
      - apt update && apt -y install cmake make
+  tags:
+    - shell
   script:
     - cmake .
     - make -j4
   artifacts:
     paths:
-      - mybinary
+      - libwavespp.so
+      - libwavespp.a
+      - test_base58
+      
       # depending on your build setup it's most likely a good idea to cache outputs to reduce the build time
       # cache:
       #   paths:
@@ -22,5 +27,7 @@ build:
 # run tests using the binary built before
 test:
   stage: test
+  tags:
+    - shell
   script:
     - make test
