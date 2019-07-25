@@ -6,18 +6,28 @@
 namespace waves {
 namespace utils {
 
+std::string to_base58(const unsigned char* v, size_t len)
+{
+    char buf[len * 2 + 1];
+    base58_encode(buf, v, len);
+    return std::string(buf);
+}
+
+std::string to_base64(const unsigned char* v, size_t len)
+{
+    char buf[len * 2 + 1];
+    base64_encode(buf, v, len);
+    return std::string(buf);
+}
+
 std::string to_base58(const std::string& v)
 {
-    char buf[v.size() * 2 + 1];
-    base58_encode(buf, (const unsigned char*)v.c_str(), v.size());
-    return std::string(buf);
+    return to_base58(reinterpret_cast<const unsigned char*>(v.c_str()), v.size());
 }
 
 std::string to_base64(const std::string& v)
 {
-    char buf[v.size() * 2 + 1];
-    base64_encode(buf, (const unsigned char*)v.c_str(), v.size());
-    return std::string(buf);
+    return to_base64(reinterpret_cast<const unsigned char*>(v.c_str()), v.size());
 }
 
 std::string from_base58(const std::string& v)
