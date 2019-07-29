@@ -9,7 +9,7 @@ using waves::utils::to_base58;
 int main()
 {
     // https://wavesexplorer.com/testnet/tx/DjnFyQ78s4baaTS4hbA6n5S9SWsJKqtrivFo2mqRjHCD
-    // curl -X GET --insecure --header 'Accept: application/json' 'http://localhost:6869/transactions/info/DjnFyQ78s4baaTS4hbA6n5S9SWsJKqtrivFo2mqRjHCD'
+    // curl -X GET --header 'Accept: application/json' 'https://testnet1.wavesnodes.com/transactions/info/DjnFyQ78s4baaTS4hbA6n5S9SWsJKqtrivFo2mqRjHCD'
     const char* expected_tx_id = "DjnFyQ78s4baaTS4hbA6n5S9SWsJKqtrivFo2mqRjHCD";
 
     waves::ExchangeTransaction::Builder builder;
