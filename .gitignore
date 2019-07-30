@@ -8,6 +8,10 @@
 *.reject
 *.a
 *.so
+*.deb
+*.rpm
+/_CPack_Packages/
+/install_manifest.txt
 /CMakeCache.txt
 /CMakeFiles/
 /TAGS
