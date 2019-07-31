@@ -29,18 +29,14 @@ build:
   tags:
     - shell
   script:
-    - cmake .
+    - mkdir -p build
+    - cd build
+    - cmake ..
     - make -j4
   artifacts:
+    expire_in: 2 hrs
     paths:
-      - libwavespp.so
-      - libwavespp.a
-      - test_base58
-      
-      # depending on your build setup it's most likely a good idea to cache outputs to reduce the build time
-      # cache:
-      #   paths:
-      #     - "*.o"
+      - build/
 
 # run tests using the binary built before
 test:
@@ -48,4 +44,5 @@ test:
   tags:
     - shell
   script:
+    - cd build
     - make test
