@@ -17,6 +17,7 @@ build:
      - make -j4
      - make package
      - dpkg -i waves-c-*.deb
+     - cd -
   tags:
     - shell
   script:
