@@ -88,8 +88,7 @@ TransactionPtr MassTransferTransaction::Builder::build()
         }
         else
         {
-            auto address = waves::utils::secure_hash_to_address(transfer.address().c_str(), _chain_id);
-            waves_tx_set_address_bytes(&e->recipient.data.address, address.c_str());
+            waves_tx_set_address_bytes(&e->recipient.data.address, transfer.address().c_str());
         }
     }
     tx->data.mass_transfer.fee = _fee;
