@@ -18,6 +18,14 @@ build:
      - make package
      - dpkg -i waves-c-*.deb
      - cd -
+     # Install coda
+     - mkdir -p src/coda
+     - cd src/coda
+     - git clone https://github.com/bachan/coda.git .
+     - cmake  .
+     - make package
+     - dpkg -i libcoda-*.deb
+     - cd -
   tags:
     - shell
   script:
