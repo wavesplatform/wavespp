@@ -2,7 +2,7 @@ stages:
     - build
     - test
 
-image: ubuntu
+image: gcc
 
 build:
   stage: build
@@ -46,6 +46,8 @@ test:
     - build
   tags:
     - shell
+  before_script:
+    - apt update && apt -y install cmake make rpm rpm-common
   script:
     - cd build
     - make test
