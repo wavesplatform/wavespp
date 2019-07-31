@@ -2,7 +2,7 @@ stages:
     - build
     - test
 
-image: gcc
+#image: gcc
 
 build:
   stage: build
@@ -28,7 +28,7 @@ build:
      - dpkg -i libcoda-*.deb
      - cd -
   tags:
-    - shell
+    - ubuntu
   script:
     - mkdir -p build
     - cd build
@@ -37,7 +37,7 @@ build:
   artifacts:
     expire_in: 2 hrs
     paths:
-      - build/
+        - build/
 
 # run tests using the binary built before
 test:
@@ -45,7 +45,7 @@ test:
   dependencies:
     - build
   tags:
-    - shell
+    - ubuntu
   script:
     - cd build
     - make test
