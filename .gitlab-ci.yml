@@ -1,6 +1,7 @@
-# use the official gcc image, based on debian
-# can use verions as well, like gcc:5.2
-# see https://hub.docker.com/_/gcc/
+stages:
+    - build
+    - test
+
 image: gcc
 
 build:
@@ -41,6 +42,8 @@ build:
 # run tests using the binary built before
 test:
   stage: test
+  dependencies:
+    - build
   tags:
     - shell
   script:
