@@ -8,6 +8,15 @@ build:
   # instead of calling g++ directly you can also use some build toolkit like make
   before_script:
      - apt update && apt -y install cmake make
+     # install waves-c
+     - rm -rf src/waves-c
+     - mkdir -p src/waves-c
+     - cd src/waves-c
+     - git clone git+ssh://git@github.com/qbcir/waves-c.git .
+     - cmake -DCMAKE_BUILD_TYPE=Debug .
+     - make -j4
+     - make package
+     - sudo dpkg -i waves-c-*.deb
   tags:
     - shell
   script:
