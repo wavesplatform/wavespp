@@ -16,7 +16,7 @@ build:
      - cmake -DCMAKE_BUILD_TYPE=Debug .
      - make -j4
      - make package
-     - sudo dpkg -i waves-c-*.deb
+     - dpkg -i waves-c-*.deb
   tags:
     - shell
   script:
