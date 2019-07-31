@@ -47,7 +47,7 @@ test:
   tags:
     - shell
   before_script:
-    - apt update && apt -y install cmake make rpm rpm-common
+    - apt update && apt -y install cmake make
   script:
     - cd build
     - make test
