@@ -103,6 +103,11 @@ target_include_directories(test_exchange_tx PRIVATE "${CMAKE_CURRENT_BINARY_DIR}
 target_link_libraries(test_exchange_tx ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES} z ssl crypto pthread dl)
 add_test(NAME exchange_tx COMMAND test_exchange_tx)
 
+add_executable(test_mass_transfer_tx tests/test_mass_transfer_tx.cc ${WAVESPP_SRC})
+target_include_directories(test_mass_transfer_tx PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/src")
+target_link_libraries(test_mass_transfer_tx ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES} z ssl crypto pthread dl)
+add_test(NAME mass_transfer_tx COMMAND test_mass_transfer_tx)
+
 #}}}
 
 # vim: fdm=marker

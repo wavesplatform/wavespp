@@ -27,4 +27,5 @@
 /test_address
 /test_base58
 /test_exchange_tx
+/test_mass_transfer_tx
 /Testing/
