@@ -244,9 +244,23 @@ int hundred_transfers_test()
     builder.addTransferByAddress(hex2bin("0154a795bc84b0233a701278b170ea69c2efdf01cd7de3e7ec56"), 100000);
     auto tx_ptr = builder.build();
 
-    const auto id_base58 = to_base58(tx_ptr->id());
+    const auto id = tx_ptr->id();
+    const auto id_base58 = to_base58(id);
+    const auto id_hex = bin2hex(reinterpret_cast<const unsigned char*>(id.c_str()), id.size());
     const char* expected_id_base58 = "CRDtQ3TQ8WvkM9J8Zq7c3ep1J3n1GqvZM7bErL31gCeq";
-    printf("%s: TX ID = %s\n", __func__, id_base58.c_str());
+
+    auto&& bytes_vec = tx_ptr->bytes();
+    const auto bytes = reinterpret_cast<const unsigned char*>(&bytes_vec[0]);
+    const auto bytes_len = bytes_vec.size();
+    auto&& tx_bytes_base58 = to_base58(bytes, bytes_len);
+
+    printf("%s: TX ID (base58) = %s ID (hex) = %s\nbytes\n(base58): %s\n(hex): %s\n",
+        __func__,
+        id_base58.c_str(),
+        id_hex.c_str(),
+        tx_bytes_base58.c_str(),
+        bin2hex(bytes, bytes_len).c_str()
+    );
     if (id_base58 != expected_id_base58) {
         fprintf(stderr, "Mass transfer tx id %s != %s\n", id_base58.c_str(), expected_id_base58);
         return 1;
@@ -260,8 +274,9 @@ int main()//{{{
     int res = 0;
 
     do {
-        if ((res = simple_test()) != 0) break;
-        if ((res = hundred_transfers_test()) != 0) break;
+        //if ((res = simple_test()) != 0) break;
+        res = hundred_transfers_test();
+        if (res) break;
     } while (false);
 
     return res;
