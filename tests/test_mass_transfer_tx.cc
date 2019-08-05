@@ -46,7 +46,7 @@ static std::string hex2bin(const char* hex, size_t len) noexcept /*{{{*/
     return res;
 }/*}}}*/
 
-static inline std::string hex2bin(const char* hex) noexcept /*{{{*//*{{{*/
+static inline std::string hex2bin(const char* hex) noexcept /*{{{*/
 {
     return hex2bin(hex, std::char_traits<char>::length(hex));
 }/*}}}*/
@@ -142,6 +142,7 @@ int hundred_transfers_test()
     builder.setAssetId(hex2bin("b12558c530fb3509a46a2eb165f15eedb6e40391de95eaf530d180f267921138"))
         .setAttachment("");
 
+#if 0
     builder.addTransferByAddress(hex2bin("01544c690cce8adea26c6b50ec1804560acd8ee7be7c0d5b193f"), 100000);
     builder.addTransferByAddress(hex2bin("0154d6834f213553f627b1a39ce956a01bafef8fc08772a6a55b"), 100000);
     builder.addTransferByAddress(hex2bin("0154c1ab79a3c25c32f8d206b0926cbb7ca2c478d2991fec5870"), 100000);
@@ -242,6 +243,109 @@ int hundred_transfers_test()
     builder.addTransferByAddress(hex2bin("015495df57cd29d5bf48206c3ca7f198a6c8aef3759efdc21d9c"), 100000);
     builder.addTransferByAddress(hex2bin("01548cbfb085087f4eb225d6e062b0860996db6692f8e12b917e"), 100000);
     builder.addTransferByAddress(hex2bin("0154a795bc84b0233a701278b170ea69c2efdf01cd7de3e7ec56"), 100000);
+#else
+    builder.addTransferByAddress(from_base58("3Mvt6yW9txnvEB75g7rRZBQVAceZjrxXKx2"), 100000);
+    builder.addTransferByAddress(from_base58("3N9UKgVHZW4es9ZHjQRDA1YwpzRSMZsyGNW"), 100000);
+    builder.addTransferByAddress(from_base58("3N7a7cFFL1VzsjQyc3CPHbSSGKzmxQ7468o"), 100000);
+    builder.addTransferByAddress(from_base58("3N4BLF4vjtQgV9oD8NtYvgzfKZBxwvS45ah"), 100000);
+    builder.addTransferByAddress(from_base58("3N32q8cR22i3StFBLjHe6r2G1JDGEV8P3wM"), 100000);
+    builder.addTransferByAddress(from_base58("3N5eWADzvJXMVz3LnSLJjiML58U4LbtTTmt"), 100000);
+    builder.addTransferByAddress(from_base58("3MytKKkdYCnQJ9hXSgwbtekHVq6kro3r3PQ"), 100000);
+    builder.addTransferByAddress(from_base58("3N4CEA8rFc9UfLwGivXwDgHNsnVfoCcNevd"), 100000);
+    builder.addTransferByAddress(from_base58("3NBfAQzkSmom9N84rkWigkXqjw9LRhumsyC"), 100000);
+    builder.addTransferByAddress(from_base58("3MySPGDg7T6NXNXi4bqsDxVjRH5VhRzZvgn"), 100000);
+    builder.addTransferByAddress(from_base58("3N7kktwbj1vaPmMxsmCKAE9SyQA7Ca68d8j"), 100000);
+    builder.addTransferByAddress(from_base58("3MuTfFV1Rhq2qFQitJ33CX1fjykxtAS23Cj"), 100000);
+    builder.addTransferByAddress(from_base58("3MzAazqXYwqj8msAuXnSVUBB1SU172sAokm"), 100000);
+    builder.addTransferByAddress(from_base58("3Mr6bR7wQJjZ7SqfnRzkh29BcxGpXj5g48S"), 100000);
+    builder.addTransferByAddress(from_base58("3NB3j9qCUp9uzZd26pCDv9ezYFGRFKkfzYk"), 100000);
+    builder.addTransferByAddress(from_base58("3MxTg1DeGex16zLi6m2h9UatdYGqxavGiur"), 100000);
+    builder.addTransferByAddress(from_base58("3N84cFmzZKxocBgfNwWmyXgfpSQnf5KcuNr"), 100000);
+    builder.addTransferByAddress(from_base58("3Mu2g1GmKzXok5F6wRLZQRmaQ1DcNtskSLH"), 100000);
+    builder.addTransferByAddress(from_base58("3MuPFcVQ67hcSaCRVasPFyBmuRxx5yBWvCG"), 100000);
+    builder.addTransferByAddress(from_base58("3N5gWaMfun6vMrpQrN55nTSN8d3jND9mMWV"), 100000);
+    builder.addTransferByAddress(from_base58("3N67nxWvmhnWEDH5wRv4GZC656iFXiSHMtN"), 100000);
+    builder.addTransferByAddress(from_base58("3MwdHcMxESReeeg186fZPZZqqf84Vy5Sj3k"), 100000);
+    builder.addTransferByAddress(from_base58("3N7nSum5jGE2aSoYNwF2aPiKJxphMEaAVgv"), 100000);
+    builder.addTransferByAddress(from_base58("3N17B5dTCvZ5qnQnBKn8z941vw5i8Pgunoq"), 100000);
+    builder.addTransferByAddress(from_base58("3Mw6B2Ai7Qd8VbFYWd9Me7Xu3W8y4PhREqa"), 100000);
+    builder.addTransferByAddress(from_base58("3N6ejCEVEaPDyF5a2kdAgviMPFP7rMr4CeG"), 100000);
+    builder.addTransferByAddress(from_base58("3N7BCQ2N9RBCb3xUUEKpP7R3VRC6aUASGZw"), 100000);
+    builder.addTransferByAddress(from_base58("3N8VkmDP4tDqBxoRosY5anExvkjXyHTDgpd"), 100000);
+    builder.addTransferByAddress(from_base58("3MvKrV6av1LKeYfCBXovYJd5cuX8i31tH5y"), 100000);
+    builder.addTransferByAddress(from_base58("3N6Hij2u2WgQzADLzZLqvz7jRvP9y2CBCFF"), 100000);
+    builder.addTransferByAddress(from_base58("3NBSQCkMqWyLRv7E1cVY1UQQZdatckoT3nU"), 100000);
+    builder.addTransferByAddress(from_base58("3MvFL7nZkGtSxgdLLwBUBB9H6AREAHaQnp4"), 100000);
+    builder.addTransferByAddress(from_base58("3MrAQ8SJARPCFzUtRrff4U3oDrtpX9GTLqy"), 100000);
+    builder.addTransferByAddress(from_base58("3MsL64ZaDcKNKZFVb389qtcXcGuSCMSnN7n"), 100000);
+    builder.addTransferByAddress(from_base58("3Mthqtad5HLK2zPC6J6PfduoA7NmW9SJEmy"), 100000);
+    builder.addTransferByAddress(from_base58("3MxY9ebhD9phcf9A4iDo3PrRYwqQdabWNYi"), 100000);
+    builder.addTransferByAddress(from_base58("3MqrobfvY4sC38Kbs8nrHuPA1oPVRYfCSUD"), 100000);
+    builder.addTransferByAddress(from_base58("3N7T9qyb8pRribqUQB3Hhhgj7cZ7DxiMBCq"), 100000);
+    builder.addTransferByAddress(from_base58("3NCyPghhVSe6D6JWghkbf3TxUzzZPaYkrbT"), 100000);
+    builder.addTransferByAddress(from_base58("3Myuo3rsiB3gjLPaVV91CxQTSGgkwAFfX8g"), 100000);
+    builder.addTransferByAddress(from_base58("3MrfENak5dETJ8TQkwk9D9ST9T3vmSyfZeg"), 100000);
+    builder.addTransferByAddress(from_base58("3N1okaa3RbD5Ao3FceNzDuhbJ9VWn9av6Ck"), 100000);
+    builder.addTransferByAddress(from_base58("3N8zSyhTotpHqPtmysv82exjqy6Q3BNTib5"), 100000);
+    builder.addTransferByAddress(from_base58("3NAWf31Z9QgrDtcMNMTaq3HjWsby669Go69"), 100000);
+    builder.addTransferByAddress(from_base58("3NCCfDxdRHy58MTpMSDNvpk8vj5AcgwoV4H"), 100000);
+    builder.addTransferByAddress(from_base58("3N6vcRobZoa3RYLT1eQpzYtkxceZ2VNkWqA"), 100000);
+    builder.addTransferByAddress(from_base58("3N5YFqAy3NofcYAH1ioWhJFzgMyzhTjw79H"), 100000);
+    builder.addTransferByAddress(from_base58("3N3yZxfRH4ARYcP5aQWowP1AEP4ka6Ssgj8"), 100000);
+    builder.addTransferByAddress(from_base58("3N5td1UFB3V9RRJw1wrF4VaYBHtxjhjJCS6"), 100000);
+    builder.addTransferByAddress(from_base58("3MufCTMQfwi7kgbY7NLzzX6ZbfpuJbqG8f3"), 100000);
+    builder.addTransferByAddress(from_base58("3MwTUT6vwQdj9wgY32nWjRYkG54TqnBCSXV"), 100000);
+    builder.addTransferByAddress(from_base58("3Mw5wKRskMZ4z45LdDUwwhccM7wUuMHbGJa"), 100000);
+    builder.addTransferByAddress(from_base58("3N1ndwAQdyQQtNSof9PGsEisvV8cVrVYfP9"), 100000);
+    builder.addTransferByAddress(from_base58("3N8pBn8fJeJ75KV71vTYMrcmLDZKbH1GoRV"), 100000);
+    builder.addTransferByAddress(from_base58("3N54Vyg3NXhGzbE9TvHM1pQYnZvfj4w3xEK"), 100000);
+    builder.addTransferByAddress(from_base58("3ND4mbm16SRnXLtVySvqtALdFvYZF7ECJTT"), 100000);
+    builder.addTransferByAddress(from_base58("3N8pQ1wh6qy5JCwHY4juYv1SkqorcAcAYAL"), 100000);
+    builder.addTransferByAddress(from_base58("3MzaaNoCK4dfscZUGtGjuC4nKHeKD9L1fao"), 100000);
+    builder.addTransferByAddress(from_base58("3NAYAX5HyUiVXoomsZoTYEjNXncchXHfsfA"), 100000);
+    builder.addTransferByAddress(from_base58("3NCiWeuBZtqEBw7nYkXxErRpRDRAMoN9JXq"), 100000);
+    builder.addTransferByAddress(from_base58("3MtgSDUEVZAp2az9Fy4s5FNBc3cEU3pQXeV"), 100000);
+    builder.addTransferByAddress(from_base58("3MsTwdFPEL26SGLWuYSYwn7aniNeTv6g3jC"), 100000);
+    builder.addTransferByAddress(from_base58("3MzT1U19SGYRLSoxg7rPiT9ramj1Ws6xfoD"), 100000);
+    builder.addTransferByAddress(from_base58("3MuSCcwbwn95KoKwCrSWpqBo6UqY9RvJEhs"), 100000);
+    builder.addTransferByAddress(from_base58("3MxZdDPWcPu1WWrNH9YuXdQk4s3W6zTjjEg"), 100000);
+    builder.addTransferByAddress(from_base58("3Mzs3dWgbcdmkkLijiq5QTDLRySRkboK42P"), 100000);
+    builder.addTransferByAddress(from_base58("3N5U4PD9XCWvhvLtXVrLhHmmebYSF6UdEZ3"), 100000);
+    builder.addTransferByAddress(from_base58("3N4LndHjs1EBH2o7ALmqBPnKJfdJTTqvgAn"), 100000);
+    builder.addTransferByAddress(from_base58("3Ms2xja5gTxJG8iC5KJJmJTT2cb6o2or3wx"), 100000);
+    builder.addTransferByAddress(from_base58("3Mz3WvShcfMQNDiGVKJVVgJZDBshfxQExEE"), 100000);
+    builder.addTransferByAddress(from_base58("3MqCpDaA1XYTrzMBxKbh18QTTvWbJrraTbK"), 100000);
+    builder.addTransferByAddress(from_base58("3MqNfN68ZsK9gvhByZk3LLuGkeg9cSSseFy"), 100000);
+    builder.addTransferByAddress(from_base58("3Mt9KCrBaHywmnR2kZJz7azEJQKhTBuyXCn"), 100000);
+    builder.addTransferByAddress(from_base58("3N9Y7aKAkV5LtiLk2KsXxzs2xYPpdNocRYv"), 100000);
+    builder.addTransferByAddress(from_base58("3N8wUqX79jiegTFdppLrAB9tCiSQ8iXj7rF"), 100000);
+    builder.addTransferByAddress(from_base58("3Mq7oEcrYPXsb6BDHKYgizLVPrcaKdBsm4y"), 100000);
+    builder.addTransferByAddress(from_base58("3MzDcSxYei8zTP8bLFHg2UYT8qxrkaD7bvp"), 100000);
+    builder.addTransferByAddress(from_base58("3N3GT9vPArK81f5WqkEUbFD3WS4iyQg2X6a"), 100000);
+    builder.addTransferByAddress(from_base58("3N7c5cMFWerHXbSLefFrkG2zeFbcwKV4dLU"), 100000);
+    builder.addTransferByAddress(from_base58("3NBw1YQi6b2892RirYcucvropWGPGLP2zex"), 100000);
+    builder.addTransferByAddress(from_base58("3MtnxBNHCkxQMpqgTaeyzrFpJnVR21xLYvS"), 100000);
+    builder.addTransferByAddress(from_base58("3MpbPi31KJ9R5edXjrRiQ8FgQPFG5GeeGbn"), 100000);
+    builder.addTransferByAddress(from_base58("3My89wXWC8xDfPoSNEZQaJAx4rKGZeumSgk"), 100000);
+    builder.addTransferByAddress(from_base58("3NCGG162pu2CK22RYhKKBHZBwxpYZhVDw4j"), 100000);
+    builder.addTransferByAddress(from_base58("3N1pbqb91u8kRFiizF52NjXabvxetpVU2Tn"), 100000);
+    builder.addTransferByAddress(from_base58("3NBEJMHrEyAgtrx1NSuHYyg1EvkpYTWQ199"), 100000);
+    builder.addTransferByAddress(from_base58("3N5SPDNGSsCkoNW7mqYQFUQw3THpuZujTd6"), 100000);
+    builder.addTransferByAddress(from_base58("3MvuEpcKGUCsTdSbHjP8tyvFNpvukzWgLHs"), 100000);
+    builder.addTransferByAddress(from_base58("3MzFKgbi82kVmi8NkuCzjLdGW2svcMMfpiL"), 100000);
+    builder.addTransferByAddress(from_base58("3N8KvkWejxP42XQdGFCMf9qAAXvFRfECBJu"), 100000);
+    builder.addTransferByAddress(from_base58("3N6KuoMw5otsbBDubjtGweiCnZG2JBcS7Wj"), 100000);
+    builder.addTransferByAddress(from_base58("3N3DJwmxGMzdFLgXia4cgBmL42XzokrQkFw"), 100000);
+    builder.addTransferByAddress(from_base58("3N3QpJ7JahWLpRmguyZfarZT9DGqB21bDnY"), 100000);
+    builder.addTransferByAddress(from_base58("3N3HzWUyhb1Chbv8JVmi76EMqR75owvKr7D"), 100000);
+    builder.addTransferByAddress(from_base58("3MwLkvGLFWQqRN915FytssaXxN7wgWLq4Ci"), 100000);
+    builder.addTransferByAddress(from_base58("3NA8WRsMLQ2j6DBx6LCpHPZfNkmEPL45ST6"), 100000);
+    builder.addTransferByAddress(from_base58("3N1P7Eqt1eUXkiWPoCRT6KkWMML17L9xBsn"), 100000);
+    builder.addTransferByAddress(from_base58("3N3aY1eNdwrcPDupxs9ehEK4X7HZKdwsxWX"), 100000);
+    builder.addTransferByAddress(from_base58("3N2kJ1bgjRrq5685cWrmfpehFfdMposdpow"), 100000);
+    builder.addTransferByAddress(from_base58("3N5CBzpj42wxhGTxEqEUZrrVzoxjttUjvqb"), 100000);
+#endif
+
     auto tx_ptr = builder.build();
 
     const auto id = tx_ptr->id();
