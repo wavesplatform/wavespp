@@ -1,3 +1,4 @@
+#include <cassert>
 #include <cstring>
 #include <string>
 
@@ -37,7 +38,7 @@ static std::string hex2bin(const char* hex, size_t len) noexcept /*{{{*/
     if (len & 1) {
         return "";
     }
-    for (size_t i = 0; i < len; i++) {
+    for (size_t i = 0; i < len; i += 2) {
         if (!isxdigit(hex[i]) || !isxdigit(hex[i+1])) {
             return "";
         }
@@ -48,8 +49,28 @@ static std::string hex2bin(const char* hex, size_t len) noexcept /*{{{*/
 
 static inline std::string hex2bin(const char* hex) noexcept /*{{{*/
 {
-    return hex2bin(hex, std::char_traits<char>::length(hex));
+    return hex2bin(hex, strlen(hex));
 }/*}}}*/
+
+static inline std::string hex2bin(const std::string s) noexcept /*{{{*/
+{
+    return hex2bin(s.c_str(), s.size());
+}
+
+static int hex_test()
+{
+    const std::string hex_str { "f0a8c3a7f0cb4e8669a4e3c85f36bb9d34fa5f0ee8906cfb2c976a5e96ad2065" };
+    const std::string base58_str { "HCS7115151v5VVgnBmBE5sMyCGy7urFZGwovnK1BMfQQ" };
+    const std::string bin_from_base58 = from_base58(base58_str);
+    const std::string bin_from_hex2bin = hex2bin(hex_str.c_str(), hex_str.size());
+
+    if (bin_from_hex2bin != bin_from_base58) {
+        fprintf(stderr, "bin_from_hex2bin(%s) !=  bin_from_base58(%s)\n",
+                bin_from_hex2bin.c_str(), bin_from_base58.c_str());
+        return 1;
+    }
+    return 0;
+}
 
 static int simple_test()//{{{
 {
@@ -133,16 +154,21 @@ int hundred_transfers_test()
 
     // https://wavesexplorer.com/testnet/tx/CRDtQ3TQ8WvkM9J8Zq7c3ep1J3n1GqvZM7bErL31gCeq
 
+    const std::string sender_public_key_hex { "f0a8c3a7f0cb4e8669a4e3c85f36bb9d34fa5f0ee8906cfb2c976a5e96ad2065" };
+    const std::string sender_public_key_base58 { "HCS7115151v5VVgnBmBE5sMyCGy7urFZGwovnK1BMfQQ" };
+    //const std::string sender_public_key_bin = from_base58(sender_public_key_base58);
+    const std::string sender_public_key_bin = hex2bin(sender_public_key_hex);
+
     builder.setVersion(1)
-        .setChainId(84)
-        .setSenderPublicKey(hex2bin("f0a8c3a7f0cb4e8669a4e3c85f36bb9d34fa5f0ee8906cfb2c976a5e96ad2065"))
+        .setChainId('T')
+        .setSenderPublicKey(sender_public_key_bin)
         .setFee(5150000L)
         .setTimestamp(1551178449125L);
 
     builder.setAssetId(hex2bin("b12558c530fb3509a46a2eb165f15eedb6e40391de95eaf530d180f267921138"))
         .setAttachment("");
 
-#if 0
+#if 1
     builder.addTransferByAddress(hex2bin("01544c690cce8adea26c6b50ec1804560acd8ee7be7c0d5b193f"), 100000);
     builder.addTransferByAddress(hex2bin("0154d6834f213553f627b1a39ce956a01bafef8fc08772a6a55b"), 100000);
     builder.addTransferByAddress(hex2bin("0154c1ab79a3c25c32f8d206b0926cbb7ca2c478d2991fec5870"), 100000);
@@ -379,8 +405,8 @@ int main()//{{{
 
     do {
         //if ((res = simple_test()) != 0) break;
-        res = hundred_transfers_test();
-        if (res) break;
+        if ((hex_test()) != 0) break;
+        if ((res = hundred_transfers_test()) != 0) break;
     } while (false);
 
     return res;
