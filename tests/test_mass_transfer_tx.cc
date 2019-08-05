@@ -244,7 +244,14 @@ int hundred_transfers_test()
     builder.addTransferByAddress(hex2bin("0154a795bc84b0233a701278b170ea69c2efdf01cd7de3e7ec56"), 100000);
     auto tx_ptr = builder.build();
 
-    printf("%s: TX ID = %s\n", __func__, to_base58(tx_ptr->id()).c_str());
+    const auto id_base58 = to_base58(tx_ptr->id());
+    const char* expected_id_base58 = "CRDtQ3TQ8WvkM9J8Zq7c3ep1J3n1GqvZM7bErL31gCeq";
+    printf("%s: TX ID = %s\n", __func__, id_base58.c_str());
+    if (id_base58 != expected_id_base58) {
+        fprintf(stderr, "Mass transfer tx id %s != %s\n", id_base58.c_str(), expected_id_base58);
+        return 1;
+    }
+
     return 0;
 }
 
