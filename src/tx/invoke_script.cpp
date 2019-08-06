@@ -138,15 +138,12 @@ FunctionCall InvokeScriptTransaction::function_call() const//{{{
         switch (arg_entries[i].arg_type) {
             case TX_FUNC_ARG_INT:
                 json_args[i] = static_cast<Json::Int64>(arg_entries[i].types.integer);
-                printf("function_call(): json_args[%d] = %lld\n", i, json_args[i].asInt64());
                 break;
             case TX_FUNC_ARG_FALSE:
                 json_args[i] = false;
-                printf("function_call(): json_args[%d] = false\n", i);
                 break;
             case TX_FUNC_ARG_TRUE:
                 json_args[i] = true;
-                printf("function_call(): json_args[%d] = true\n", i);
                 break;
             case TX_FUNC_ARG_STR:
                 json_args[i] = std::string(arg_entries[i].types.string.data,
@@ -157,7 +154,6 @@ FunctionCall InvokeScriptTransaction::function_call() const//{{{
                     (unsigned char*)arg_entries[i].types.binary.decoded_data,
                     arg_entries[i].types.binary.decoded_len
                 );
-                printf("function_call(): json_args[%d] = (bin)\n", i);
                 break;
             default:
                 assert(false);
