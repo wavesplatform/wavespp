@@ -1,11 +1,20 @@
+#include <cassert>
+
+#include <jsoncpp/json/json.h>
+
 #include "invoke_script.hpp"
-#include "utils.hpp"
+#include "../utils.hpp"
 
 namespace waves {
 
 Payment::Payment(const std::string& asset_id_, tx_amount_t amount_) :
     asset_id(asset_id_),
     amount(amount_)
+{}
+
+FunctionCall::FunctionCall(const std::string& func_name, const std::string& args_json)
+    : func_name_{ func_name }
+    , args_json_{ args_json }
 {}
 
 InvokeScriptTransaction::Builder::Builder() :
@@ -111,5 +120,52 @@ tx_timestamp_t InvokeScriptTransaction::timestamp() const
 {
     return _tx->data.invoke_script.timestamp;
 }
+
+FunctionCall InvokeScriptTransaction::function_call() const//{{{
+{
+    const std::string func_name(_tx->data.invoke_script.call.function.data,
+            _tx->data.invoke_script.call.function.len);
+    const auto args_len = _tx->data.invoke_script.call.args.len;
+    const auto arg_entries = reinterpret_cast<tx_func_arg_t*>(_tx->data.invoke_script.call.args.array);
+
+    Json::StreamWriterBuilder json_builder;
+    Json::Value json_args(Json::arrayValue);
+#ifndef JSON_HAS_INT64
+# error libjsonpp must be built with int64 support
+#endif
+    const std::string base64_prefix {"base64:"};
+    for (tx_size_t i = 0; i < args_len; ++i) {
+        switch (arg_entries[i].arg_type) {
+            case TX_FUNC_ARG_INT:
+                json_args[i] = static_cast<Json::Int64>(arg_entries[i].types.integer);
+                printf("function_call(): json_args[%d] = %lld\n", i, json_args[i].asInt64());
+                break;
+            case TX_FUNC_ARG_FALSE:
+                json_args[i] = false;
+                printf("function_call(): json_args[%d] = false\n", i);
+                break;
+            case TX_FUNC_ARG_TRUE:
+                json_args[i] = true;
+                printf("function_call(): json_args[%d] = true\n", i);
+                break;
+            case TX_FUNC_ARG_STR:
+                json_args[i] = std::string(arg_entries[i].types.string.data,
+                        arg_entries[i].types.string.len);
+                break;
+            case TX_FUNC_ARG_BIN:
+                json_args[i] = base64_prefix + utils::to_base64(
+                    (unsigned char*)arg_entries[i].types.binary.decoded_data,
+                    arg_entries[i].types.binary.decoded_len
+                );
+                printf("function_call(): json_args[%d] = (bin)\n", i);
+                break;
+            default:
+                assert(false);
+                break;
+        }
+    }
+    const auto args_json = Json::writeString(json_builder, json_args);
+    return FunctionCall(func_name, args_json);
+}//}}}
 
 }

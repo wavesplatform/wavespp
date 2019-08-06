@@ -1,6 +1,9 @@
 #ifndef __WAVESPP_TX_INVOKE_SCRIPT_HPP_19595__
 #define __WAVESPP_TX_INVOKE_SCRIPT_HPP_19595__
 
+#include <string>
+#include <vector>
+
 #include "base.hpp"
 
 namespace waves {
@@ -11,6 +14,20 @@ struct Payment
     std::string asset_id;
     tx_amount_t amount;
 };
+
+class FunctionCall//{{{
+{
+public:
+    FunctionCall() = delete;
+    explicit FunctionCall(const std::string& func_name, const std::string& args_json);
+    virtual ~FunctionCall() = default;
+
+    std::string func_name() const noexcept { return func_name_; }
+    std::string args_json() const noexcept { return args_json_; }
+private:
+    std::string func_name_;
+    std::string args_json_;
+};//}}}
 
 class InvokeScriptTransaction : public Transaction
 {
@@ -38,6 +55,7 @@ public:
 
     tx_fee_t fee() const;
     tx_timestamp_t timestamp() const;
+    FunctionCall function_call() const;
 };
 
 }

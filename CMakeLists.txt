@@ -28,6 +28,9 @@ include_directories(${WAVES_C_INCLUDE_DIRS})
 find_package(CODA CONFIG REQUIRED)
 include_directories(${CODA_INCLUDE_DIRS})
 
+find_package(JSONCPP CONFIG REQUIRED)
+include_directories(${JSONCPP_INCLUDE_DIRS})
+
 add_library(wavespp STATIC ${WAVESPP_SRC})
 target_link_libraries(wavespp ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES})
 set_target_properties(wavespp PROPERTIES PUBLIC_HEADER "${WAVESPP_HEADERS}")
@@ -36,7 +39,10 @@ add_library(wavespp_shared SHARED ${WAVESPP_SRC})
 set_target_properties(wavespp_shared PROPERTIES
     OUTPUT_NAME wavespp
     PUBLIC_HEADER "${WAVESPP_HEADERS}")
-target_link_libraries(wavespp_shared ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES})
+target_link_libraries(wavespp_shared
+    ${WAVES_C_LIBRARIES}
+    ${CODA_LIBRARIES}
+    ${JSONCPP_LIBRARIES})
 
 install(TARGETS wavespp wavespp_shared
         ARCHIVE DESTINATION lib/wavespp
@@ -88,25 +94,32 @@ include(CPack)
 # Tests {{{
 enable_testing()
 
+set(TEST_LIRARIES ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES} ${JSONCPP_LIBRARIES} z ssl crypto pthread dl)
+
 add_executable(test_base58 tests/test_base58.cc ${WAVESPP_SRC})
 target_include_directories(test_base58 PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/src")
-target_link_libraries(test_base58 ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES} z ssl crypto pthread dl)
+target_link_libraries(test_base58 ${TEST_LIRARIES})
 add_test(NAME base58 COMMAND test_base58)
 
 add_executable(test_address tests/test_address.cc ${WAVESPP_SRC})
 target_include_directories(test_address PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/src")
-target_link_libraries(test_address ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES} z ssl crypto pthread dl)
+target_link_libraries(test_address ${TEST_LIRARIES})
 add_test(NAME address COMMAND test_address)
 
 add_executable(test_exchange_tx tests/test_exchange_tx.cc ${WAVESPP_SRC})
 target_include_directories(test_exchange_tx PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/src")
-target_link_libraries(test_exchange_tx ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES} z ssl crypto pthread dl)
+target_link_libraries(test_exchange_tx ${TEST_LIRARIES})
 add_test(NAME exchange_tx COMMAND test_exchange_tx)
 
 add_executable(test_mass_transfer_tx tests/test_mass_transfer_tx.cc ${WAVESPP_SRC})
 target_include_directories(test_mass_transfer_tx PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/src")
-target_link_libraries(test_mass_transfer_tx ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES} z ssl crypto pthread dl)
+target_link_libraries(test_mass_transfer_tx ${TEST_LIRARIES})
 add_test(NAME mass_transfer_tx COMMAND test_mass_transfer_tx)
+
+add_executable(test_invoke_script_tx tests/test_invoke_script_tx.cc ${WAVESPP_SRC})
+target_include_directories(test_invoke_script_tx PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_SOURCE_DIR}/src")
+target_link_libraries(test_invoke_script_tx ${TEST_LIRARIES})
+add_test(NAME invoke_script_tx COMMAND test_invoke_script_tx)
 
 #}}}
 

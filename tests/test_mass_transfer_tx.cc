@@ -104,13 +104,6 @@ static int simple_test()//{{{
     const uint64_t amount1 = 100000L;
     const uint64_t amount2 = 123456L;
 
-#if 0
-    const std::string recipient1_bin = from_base58(recipient1);
-    const std::string recipient2_bin = from_base58(recipient2);
-    printf("recipient1 = %s\n", bin2hex(reinterpret_cast<const unsigned char*>(recipient1_bin.c_str()), recipient1_bin.size()).c_str());
-    printf("recipient2 = %s\n", bin2hex(reinterpret_cast<const unsigned char*>(recipient2_bin.c_str()), recipient2_bin.size()).c_str());
-#endif
-
     waves::MassTransferTransaction::Builder builder;
     builder
         .setAssetId(asset_id)
