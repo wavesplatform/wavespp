@@ -86,7 +86,14 @@ TransactionPtr InvokeScriptTransaction::Builder::build()
             waves_tx_set_asset_id_bytes(&e->asset_id, payment.asset_id.c_str());
         }
     }
-    tx_load_func_call(&tx->data.invoke_script.call, (const unsigned char*)_function_call.c_str());
+    if (_function_call.empty())
+    {
+        tx->data.invoke_script.call.valid = false;
+    }
+    else
+    {
+        tx_load_func_call(&tx->data.invoke_script.call, (const unsigned char*)_function_call.c_str());
+    }
     tx->data.invoke_script.d_app.is_alias = _is_dapp_alias;
     if (_is_dapp_alias)
     {
