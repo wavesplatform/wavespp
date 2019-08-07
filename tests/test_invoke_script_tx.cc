@@ -228,6 +228,76 @@ Tx bytes in hex:
     return 0;
 }//}}}
 
+
+static int test_non_default_func_name_serialization()
+{
+    waves::InvokeScriptTransaction::Builder builder;
+
+    const char* expected_tx_id = "GphqcrFugbzMF9BVEgt1xqwRZirBi6jxKcRbjmbtaUaT";
+    const char* expected_func_name = "stateChange";
+    const char* expected_args = "[]";
+
+    builder
+        .setVersion(1)
+        .setChainId(84)
+        .setSenderPublicKey(hex2bin("3d155a4972d5f000e0d9f904d8fee756ec3b835ba21133f301c7d8489e4a1e4f"))
+        .setFee(500000)
+        .setTimestamp(1563370332624);
+
+    builder.setFunctionCall(hex2bin("0109010000000b73746174654368616e676500000000"));
+    builder.setDappPublicKeyHash(hex2bin("445b674c45823fcf534474a69995565054d7b8ad"));
+    builder.addPayment("", 300);
+
+    const auto tx = builder.build();
+
+    auto&& tx_id = to_base58(tx->id());
+    auto&& bytes_vec = tx->bytes();
+    const auto bytes = reinterpret_cast<const unsigned char*>(bytes_vec.data());
+    const auto bytes_len = bytes_vec.size();
+    auto&& tx_bytes_base58 = to_base58(bytes, bytes_len);
+
+    const auto itx = std::static_pointer_cast<waves::InvokeScriptTransaction>(tx);
+    const auto fcall = itx->function_call();
+    const auto func_name = fcall.func_name();
+    const auto args = fcall.args_json();
+
+    printf("%s:\n"
+            "ID: %s\n"
+            "(base58): %s\n"
+            "(hex): %s\n"
+            "func_name: %s\n"
+            "args: %s\n",
+            __func__,
+            tx_id.c_str(),
+            tx_bytes_base58.c_str(),
+            bin2hex(bytes, bytes_len).c_str(),
+            func_name.c_str(),
+            args.c_str()
+          );
+
+
+    if (tx_id != expected_tx_id) {
+        fprintf(stderr, "Invoke Script TX ID does not match expected value: %s != %s\n",
+                tx_id.c_str(), expected_tx_id);
+        return 1;
+    }
+
+
+    if (func_name != expected_func_name) {
+        fprintf(stderr, "%s: func_name %s != expected_func_name %s\n",
+                __func__, func_name.c_str(), expected_func_name);
+        return 1;
+    }
+
+    if (args != expected_args) {
+        fprintf(stderr, "%s: args %s != expected args %s\n",
+                __func__, args.c_str(), expected_args);
+        return 1;
+    }
+
+    return 0;
+}
+
 int main()
 {
     int res = 0;
@@ -235,6 +305,7 @@ int main()
     do {
         if ((res = test_func_call_serialization()) != 0) break;
         if ((res = test_default_func_call_serialization()) != 0) break;
+        if ((res = test_non_default_func_name_serialization()) != 0) break;
     } while (false);
 
     return res;
