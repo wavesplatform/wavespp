@@ -6,9 +6,8 @@
 #include "../src/address.hpp"
 #include "../src/utils.hpp"
 
-int main(int argc, char const* argv[])
+static int test_address_to_base58()//{{{
 {
-
     const std::string base58_address = "3MtBqEtkF8cYkNJv85QUS4wteNj48ZMAnt9";
     const std::string bin_address = waves::utils::from_base58(base58_address);
 
@@ -32,4 +31,35 @@ int main(int argc, char const* argv[])
     }
 
     return 0;
+}//}}}
+
+static int test_address_to_binary()//{{{
+{
+    const char* address_base58 = "3Mv9XDntij4ZRE1XiNZed6J74rncBpiYNDV";
+    const auto expected_address_binary = waves::utils::from_base58(address_base58);
+
+    waves::address address(address_base58);
+    const auto address_binary = address.to_binary();
+
+    if (address_binary != expected_address_binary) {
+        fprintf(stderr, "%s: binary address %s != expected_address_binary %s \n",
+                __func__,
+                address_binary.c_str(),
+                expected_address_binary.c_str());
+        return 1;
+    }
+
+    return 0;
+}//}}}
+
+int main(int argc, char const* argv[])
+{
+    int res = 0;
+
+    do {
+        if ((res = test_address_to_base58())) break;
+        if ((res = test_address_to_binary())) break;
+    } while (false);
+
+    return res;
 }

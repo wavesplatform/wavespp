@@ -123,6 +123,11 @@ bool address::satisfy(const public_key& _pub_k, unsigned char net)
     return *this == address(_pub_k, net);
 }
 
+std::string address::to_binary() const
+{
+    return std::string(reinterpret_cast<const char*>(_data), sizeof _data);
+}
+
 std::string address::to_base58() const
 {
     char out_buf[address::ADDRESS_B58_LEN+1];

@@ -53,7 +53,10 @@ struct address
     // `binary_address` is a raw (binary) representation of an address.
     explicit address(const unsigned char (&binary_address)[ADDRESS_BIN_LEN]);
 
+    // Returns the address in Base58 format
     std::string to_base58() const;
+    // Returns raw (binary) representation of the address
+    std::string to_binary() const;
 
     /**
      * Returns user group ID.
