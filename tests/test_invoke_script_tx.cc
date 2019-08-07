@@ -147,6 +147,9 @@ static int test_default_func_call_serialization()//{{{
 {
     // https://wavesexplorer.com/testnet/tx/4n78dua6HRcrPqvX56qz8TVqcmBqvnKLMDndzE7w63DU
     const char* expected_tx_id = "4n78dua6HRcrPqvX56qz8TVqcmBqvnKLMDndzE7w63DU";
+    const char* expected_func_name = "default";
+    const char* expected_args = "[]";
+
 #if 0
 Tx bytes in hex:
 1001543d155a4972d5f000e0d9f904d8fee756ec3b835ba21133f301c7d8489e4a1e4f02540009746573742d64617070000000000000000007a120000000016c0022286e
@@ -186,16 +189,39 @@ Tx bytes in hex:
     const auto bytes_len = bytes_vec.size();
     auto&& tx_bytes_base58 = to_base58(bytes, bytes_len);
 
+    const auto itx = std::static_pointer_cast<waves::InvokeScriptTransaction>(tx);
+    const auto fcall = itx->function_call();
+    const auto func_name = fcall.func_name();
+    const auto args = fcall.args_json();
+
     printf("Invoke Script TX bytes\n"
             "(base58): %s\n"
-            "(hex): %s\n",
+            "(hex): %s\n"
+            "func_name: %s\n"
+            "args: %s\n",
             tx_bytes_base58.c_str(),
-            bin2hex(bytes, bytes_len).c_str()
+            bin2hex(bytes, bytes_len).c_str(),
+            func_name.c_str(),
+            args.c_str()
           );
+
 
     if (tx_id != expected_tx_id) {
         fprintf(stderr, "Invoke Script TX ID does not match expected value: %s != %s\n",
                 tx_id.c_str(), expected_tx_id);
+        return 1;
+    }
+
+
+    if (func_name != expected_func_name) {
+        fprintf(stderr, "%s: func_name %s != expected_func_name %s\n",
+                __func__, func_name.c_str(), expected_func_name);
+        return 1;
+    }
+
+    if (args != expected_args) {
+        fprintf(stderr, "%s: args %s != expected args %s\n",
+                __func__, args.c_str(), expected_args);
         return 1;
     }
 

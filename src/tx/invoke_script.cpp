@@ -130,10 +130,18 @@ tx_timestamp_t InvokeScriptTransaction::timestamp() const
 
 FunctionCall InvokeScriptTransaction::function_call() const//{{{
 {
-    const std::string func_name(_tx->data.invoke_script.call.function.data,
-            _tx->data.invoke_script.call.function.len);
-    const auto args_len = _tx->data.invoke_script.call.args.len;
-    const auto arg_entries = reinterpret_cast<tx_func_arg_t*>(_tx->data.invoke_script.call.args.array);
+    auto&& call = _tx->data.invoke_script.call;
+    const auto args_len = call.args.len;
+    const auto arg_entries = reinterpret_cast<tx_func_arg_t*>(call.args.array);
+
+    std::string func_name;
+
+    if (call.function.data != 0x00) {
+        func_name.assign(call.function.data, call.function.len);
+    } else {
+        func_name.assign("default");
+        assert(args_len == 0);
+    }
 
     Json::StreamWriterBuilder json_builder;
     Json::Value json_args(Json::arrayValue);
