@@ -82,7 +82,7 @@ static int test_func_call_serialization()//{{{
 
     auto&& tx_id = to_base58(tx->id());
     auto&& bytes_vec = tx->bytes();
-    const auto bytes = reinterpret_cast<const unsigned char*>(&bytes_vec[0]);
+    const auto bytes = reinterpret_cast<const unsigned char*>(bytes_vec.data());
     const auto bytes_len = bytes_vec.size();
     auto&& tx_bytes_base58 = to_base58(bytes, bytes_len);
 
@@ -143,12 +143,73 @@ static int test_func_call_serialization()//{{{
     return 0;
 }//}}}
 
+static int test_default_func_call_serialization()//{{{
+{
+    // https://wavesexplorer.com/testnet/tx/4n78dua6HRcrPqvX56qz8TVqcmBqvnKLMDndzE7w63DU
+    const char* expected_tx_id = "4n78dua6HRcrPqvX56qz8TVqcmBqvnKLMDndzE7w63DU";
+#if 0
+Generated  Tx bytes in hex:
+1001543d155a4972d5f000e0d9f904d8fee756ec3b835ba21133f301c7d8489e4a1e4f02540009746573742d64617070000000000000000007a120000000016c0022286e00000000000000000000
+
+10 // type
+01 // version
+54 // chain id
+3d155a4972d5f000e0d9f904d8fee756ec3b835ba21133f301c7d8489e4a1e4f // sender public key
+02 // alias flag
+54 // chain id
+0009 // alias length
+746573742d64617070 // alias
+00 // default
+0000 // ???
+000000000007a120 // fee
+00 // ??
+0000016c0022286e // timestamp
+00000000000000000000 // ???
+#endif
+
+    waves::InvokeScriptTransaction::Builder builder;
+    builder
+        .setVersion(1)
+        .setChainId(84)
+        .setSenderPublicKey(hex2bin("3d155a4972d5f000e0d9f904d8fee756ec3b835ba21133f301c7d8489e4a1e4f"))
+        .setFee(500000) // 7a120
+        .setTimestamp(1563370334318) // 16c0022286e
+    ;
+
+    auto&& tx = builder
+        .setFunctionCall(""/*0x0*/)
+        .setDappAlias(hex2bin("746573742d64617070")) // test-dapp
+        .build();
+
+    auto&& tx_id = to_base58(tx->id());
+    auto&& bytes_vec = tx->bytes();
+    const auto bytes = reinterpret_cast<const unsigned char*>(bytes_vec.data());
+    const auto bytes_len = bytes_vec.size();
+    auto&& tx_bytes_base58 = to_base58(bytes, bytes_len);
+
+    printf("Invoke Script TX bytes\n"
+            "(base58): %s\n"
+            "(hex): %s\n",
+            tx_bytes_base58.c_str(),
+            bin2hex(bytes, bytes_len).c_str()
+          );
+
+    if (tx_id != expected_tx_id) {
+        fprintf(stderr, "Invoke Script TX ID does not match expected value: %s != %s\n",
+                tx_id.c_str(), expected_tx_id);
+        return 1;
+    }
+
+    return 0;
+}//}}}
+
 int main()
 {
     int res = 0;
 
     do {
         if ((res = test_func_call_serialization()) != 0) break;
+        if ((res = test_default_func_call_serialization()) != 0) break;
     } while (false);
 
     return res;
