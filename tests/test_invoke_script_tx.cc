@@ -148,10 +148,10 @@ static int test_default_func_call_serialization()//{{{
     // https://wavesexplorer.com/testnet/tx/4n78dua6HRcrPqvX56qz8TVqcmBqvnKLMDndzE7w63DU
     const char* expected_tx_id = "4n78dua6HRcrPqvX56qz8TVqcmBqvnKLMDndzE7w63DU";
 #if 0
-Generated  Tx bytes in hex:
-1001543d155a4972d5f000e0d9f904d8fee756ec3b835ba21133f301c7d8489e4a1e4f02540009746573742d64617070000000000000000007a120000000016c0022286e00000000000000000000
+Tx bytes in hex:
+1001543d155a4972d5f000e0d9f904d8fee756ec3b835ba21133f301c7d8489e4a1e4f02540009746573742d64617070000000000000000007a120000000016c0022286e
 
-10 // type
+10 // tx type
 01 // version
 54 // chain id
 3d155a4972d5f000e0d9f904d8fee756ec3b835ba21133f301c7d8489e4a1e4f // sender public key
@@ -160,11 +160,10 @@ Generated  Tx bytes in hex:
 0009 // alias length
 746573742d64617070 // alias
 00 // default
-0000 // ???
+0000 // payments number
 000000000007a120 // fee
-00 // ??
+00 // fee asset id
 0000016c0022286e // timestamp
-00000000000000000000 // ???
 #endif
 
     waves::InvokeScriptTransaction::Builder builder;
