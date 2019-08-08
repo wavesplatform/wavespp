@@ -52,6 +52,8 @@ struct address
     address(const public_key& _pub_k, unsigned char net);
     // `binary_address` is a raw (binary) representation of an address.
     explicit address(const unsigned char (&binary_address)[ADDRESS_BIN_LEN]);
+    // Constructs address from its raw (binary) representation.
+    static address FromBinary(const std::string& binary);
 
     // Returns the address in Base58 format
     std::string to_base58() const;

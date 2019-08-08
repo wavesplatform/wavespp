@@ -98,7 +98,7 @@ address::address(const char* _str)
     if (b58len > address::ADDRESS_B58_LEN)
     {
         throw coda_error("Address base58 string length is %lu, "
-                         "should be no more than %lu", b58len, address::ADDRESS_B58_LEN);
+                         "should be no more than %lu", b58len, ADDRESS_B58_LEN);
     }
     memset(_data, 0, sizeof(_data));
     ssize_t ret = base58_decode(_data, _str);
@@ -117,6 +117,19 @@ address::address(const unsigned char (&binary_address)[ADDRESS_BIN_LEN])
 {
     memcpy(_data, binary_address, ADDRESS_BIN_LEN);
 }
+
+address address::FromBinary(const std::string& binary)
+{
+    if (binary.size() == ADDRESS_BIN_LEN) {
+        const unsigned char (&binary_uchar)[ADDRESS_BIN_LEN] =
+            reinterpret_cast<const unsigned char (&)[ADDRESS_BIN_LEN]>
+            (*binary.c_str());
+        return address(binary_uchar);
+    }
+
+    throw coda_error("Binary address length must be equal to %lu", ADDRESS_BIN_LEN);
+}
+
 
 bool address::satisfy(const public_key& _pub_k, unsigned char net)
 {
