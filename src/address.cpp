@@ -127,7 +127,8 @@ address address::FromBinary(const std::string& binary)
         return address(binary_uchar);
     }
 
-    throw coda_error("Binary address length must be equal to %lu", ADDRESS_BIN_LEN);
+    throw coda_error("Binary address length must be equal to %lu, got %lu",
+            ADDRESS_BIN_LEN, binary.size());
 }
 
 
