@@ -92,19 +92,22 @@ address::address()
     memset(_data, 0, sizeof(_data));
 }
 
-address::address(const char* _str)
+address::address(const char* str)
+    : address(str, strlen(str))
+{}
+
+address::address(const char* str, size_t len)
 {
-    size_t b58len = strlen(_str);
-    if (b58len > address::ADDRESS_B58_LEN)
+    if (len > address::ADDRESS_B58_LEN)
     {
         throw coda_error("Address base58 string length is %lu, "
-                         "should be no more than %lu", b58len, ADDRESS_B58_LEN);
+                         "should be no more than %lu", len, ADDRESS_B58_LEN);
     }
     memset(_data, 0, sizeof(_data));
-    ssize_t ret = base58_decode(_data, _str);
+    ssize_t ret = base58_decode(_data, str);
     if (ret < 0)
     {
-        throw base58_decode_exception(_str, -ret+1);
+        throw base58_decode_exception(str, -ret+1);
     }
 }
 

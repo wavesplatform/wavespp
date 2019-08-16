@@ -49,6 +49,7 @@ struct address
 
     address();
     address(const char* _str); // from base58
+    address(const char* str, size_t len); // from base58
     address(const public_key& _pub_k, unsigned char net);
     // `binary_address` is a raw (binary) representation of an address.
     explicit address(const unsigned char (&binary_address)[ADDRESS_BIN_LEN]);
