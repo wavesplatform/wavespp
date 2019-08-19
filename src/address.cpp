@@ -104,7 +104,7 @@ address::address(const char* str, size_t len)
                          "should be no more than %lu", len, ADDRESS_B58_LEN);
     }
     memset(_data, 0, sizeof(_data));
-    ssize_t ret = base58_decode(_data, str);
+    ssize_t ret = base58_decode_len(_data, str, len);
     if (ret < 0)
     {
         throw base58_decode_exception(str, -ret+1);
