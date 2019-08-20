@@ -35,6 +35,16 @@ add_library(wavespp STATIC ${WAVESPP_SRC})
 target_link_libraries(wavespp ${WAVES_C_LIBRARIES} ${CODA_LIBRARIES})
 set_target_properties(wavespp PROPERTIES PUBLIC_HEADER "${WAVESPP_HEADERS}")
 
+find_package(OpenSSL REQUIRED)
+if( OpenSSL_FOUND )
+    list(APPEND LIB_LIST ${OPENSSL_LIBRARIES})
+    include_directories(${OPENSSL_INCLUDE_DIR})
+    message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
+else()
+    message(SEND_ERROR "Failed to find OpenSSL")
+    return()
+endif()
+
 add_library(wavespp_shared SHARED ${WAVESPP_SRC})
 set_target_properties(wavespp_shared PROPERTIES
     OUTPUT_NAME wavespp
@@ -42,7 +52,8 @@ set_target_properties(wavespp_shared PROPERTIES
 target_link_libraries(wavespp_shared
     ${WAVES_C_LIBRARIES}
     ${CODA_LIBRARIES}
-    ${JSONCPP_LIBRARIES})
+    ${JSONCPP_LIBRARIES}
+    ${OPENSSL_LIBRARIES})
 
 install(TARGETS wavespp wavespp_shared
         ARCHIVE DESTINATION lib/wavespp
