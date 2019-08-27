@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.9)
 set(PROJECT_VERSION_STRING 1.0.5.1)
 set(PROJECT_VERSION_NUMBER 0x01000501)
 project(wavespp
-    VERSION ${PROJECT_VERSION_STRING}
+    VERSION "${PROJECT_VERSION_STRING}"
     DESCRIPTION "C++ library to work with waves transactions"
     LANGUAGES C CXX)
 set(include_out_dir "${CMAKE_CURRENT_BINARY_DIR}/include")
@@ -11,7 +11,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(MAKE_DIRECTORY "${include_out_dir}")
 configure_file("src/version.h.in" "${include_out_dir}/version.h")
-project(wavespp VERSION)
 
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${CMAKE_CURRENT_SOURCE_DIR}/CMake/modules")
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} /usr/local "${CMAKE_SOURCE_DIR}/CMake/modules")
