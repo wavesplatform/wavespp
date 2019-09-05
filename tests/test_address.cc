@@ -6,6 +6,8 @@
 #include "../src/address.hpp"
 #include "../src/utils.hpp"
 
+static constexpr auto PUBLIC_KEY_BIN_LEN = waves::public_key::PUBLIC_KEY_BIN_LEN;
+
 static int test_address_to_base58()//{{{
 {
     const std::string base58_address = "3MtBqEtkF8cYkNJv85QUS4wteNj48ZMAnt9";
@@ -71,6 +73,35 @@ static int test_address_from_binary()//{{{
     return 0;
 }//}}}
 
+static int test_address_from_unsigned_char()
+{
+    printf("%s\n", __func__);
+    const char* address_base58 = "3ND8YwWJ5XHhYNbLcWv9uZEqVboSU8iyMgu";
+    const auto expected_address_binary = waves::utils::from_base58(address_base58);
+
+    const std::string input_public_key_str = "Do24gp5eC4HrN6XQkYh7FicnbHH3q7nEMnSUfn9Gundu";
+    const std::string input_public_key = waves::utils::from_base58(input_public_key_str);
+
+    const unsigned char chain_id = 'T';
+    const unsigned char (&public_key)[PUBLIC_KEY_BIN_LEN] =
+        reinterpret_cast<const unsigned char (&)[PUBLIC_KEY_BIN_LEN]>(
+                *input_public_key.c_str());
+    waves::public_key sender_public_key(public_key);
+    waves::address address(sender_public_key, chain_id);
+    const auto address_binary = address.to_binary();
+
+    if (address_binary != expected_address_binary) {
+        fprintf(stderr, "%s: binary address %s != expected_address_binary %s \n",
+                __func__,
+                address_binary.c_str(),
+                expected_address_binary.c_str());
+        return 1;
+    }
+    printf("%s: address_binary: %s\n", __func__, waves::utils::to_base58(address_binary).c_str());
+    return 0;
+}
+
+
 int main(int argc, char const* argv[])
 {
     int res = 0;
@@ -79,6 +110,7 @@ int main(int argc, char const* argv[])
         if ((res = test_address_to_base58())) break;
         if ((res = test_address_to_binary())) break;
         if ((res = test_address_from_binary())) break;
+        if ((res = test_address_from_unsigned_char())) break;
     } while (false);
 
     return res;
