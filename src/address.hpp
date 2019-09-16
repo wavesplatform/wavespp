@@ -4,6 +4,7 @@
 #include <cstring>
 #include <string>
 #include "coda/error.hpp"
+#include "utils.hpp"
 
 namespace waves {
 
@@ -36,6 +37,21 @@ struct public_key
 
     bool verify_signature(unsigned char* msg, size_t msg_sz, unsigned char *_signature) const;
     std::string to_base58() const;
+
+    inline bool operator <(const public_key& other) const
+    {
+        return memcmp(_data, other._data, sizeof(_data)) < 0;
+    }
+
+    inline bool operator ==(const public_key& other) const
+    {
+        return memcmp(_data, other._data, sizeof(_data)) == 0;
+    }
+
+    inline bool operator !=(const public_key& other) const
+    {
+        return memcmp(_data, other._data, sizeof(_data)) != 0;
+    }
 
     unsigned char _data[PUBLIC_KEY_BIN_LEN];
 };
@@ -114,13 +130,16 @@ struct hash<waves::address>
 {
     size_t operator() (const waves::address& addr) const
     {
-        std::hash<unsigned char> hasher;
-        size_t result = 0;
-        for(size_t i = 0; i < sizeof(addr._data); ++i)
-        {
-            result = result * 31 + hasher(addr._data[i]);
-        }
-        return result;
+        return waves::utils::hash_bytes(addr._data, sizeof(addr._data));
+    }
+};
+
+template<>
+struct hash<waves::public_key>
+{
+    size_t operator() (const waves::public_key& pk) const
+    {
+        return waves::utils::hash_bytes(pk._data, sizeof(pk._data));
     }
 };
 

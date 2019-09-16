@@ -16,6 +16,8 @@ std::string from_base64(const std::string& v);
 
 std::string secure_hash_to_address(const std::string& hash, uint8_t chain_id);
 
+size_t hash_bytes(const unsigned char *data, size_t len);
+
 }}
 
 #endif /* __WAVESPP_UTILS_HPP_15740__ */

@@ -62,4 +62,15 @@ std::string secure_hash_to_address(const std::string& hash, uint8_t chain_id)
     return address;
 }
 
+size_t hash_bytes(const unsigned char* data, size_t len)
+{
+    std::hash<unsigned char> hasher;
+    size_t result = 0;
+    for(size_t i = 0; i < len; ++i)
+    {
+        result = result * 31 + hasher(data[i]);
+    }
+    return result;
+}
+
 }}
