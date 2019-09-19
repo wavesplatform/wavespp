@@ -73,4 +73,43 @@ size_t hash_bytes(const unsigned char* data, size_t len)
     return result;
 }
 
+constexpr char hexmap[] = {'0', '1', '2', '3', '4', '5', '6', '7',
+                           '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
+// Converts binary string to hex representation
+std::string bin2hex(const unsigned char *data, size_t len)
+{
+    std::string s(len * 2, ' ');
+    for (size_t i = 0; i < len; ++i) {
+        s[2 * i]     = hexmap[(data[i] & 0xF0) >> 4];
+        s[2 * i + 1] = hexmap[data[i] & 0x0F];
+    }
+    return s;
+}
+
+static unsigned char to_nibble (char c) noexcept
+{
+    if (c >= '0' && c <= '9') return c - '0';
+    if (c >= 'a' && c <= 'f') return 10 + c - 'a';
+    if (c >= 'A' && c <= 'F') return 10 + c - 'A';
+    return 0xFF;
+}
+
+std::string hex2bin(const char* hex, size_t len) noexcept
+{
+    std::string res;
+    res.reserve(len / 2);
+    if (len & 1) {
+        return "";
+    }
+    for (size_t i = 0; i < len; i += 2) {
+        if (!isxdigit(hex[i]) || !isxdigit(hex[i+1])) {
+            return "";
+        }
+        res += to_nibble(hex[i]) * 16 + to_nibble(hex[i+1]);
+    }
+    return res;
+}
+
+
 }}

@@ -18,6 +18,20 @@ std::string secure_hash_to_address(const std::string& hash, uint8_t chain_id);
 
 size_t hash_bytes(const unsigned char *data, size_t len);
 
+std::string bin2hex(const unsigned char *data, size_t len);
+
+std::string hex2bin(const char* hex, size_t len) noexcept;
+
+inline std::string hex2bin(const char* hex) noexcept
+{
+    return hex2bin(hex, std::char_traits<char>::length(hex));
+}
+
+inline std::string hex2bin(const std::string s) noexcept
+{
+    return hex2bin(s.c_str(), s.size());
+}
+
 }}
 
 #endif /* __WAVESPP_UTILS_HPP_15740__ */
