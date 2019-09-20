@@ -35,7 +35,7 @@ struct public_key
 
     bool is_set() const; // true if _data != {0,0,0,0...}
 
-    bool verify_signature(unsigned char* msg, size_t msg_sz, unsigned char *_signature) const;
+    bool verify_signature(const unsigned char* msg, size_t msg_sz, const unsigned char* _signature) const;
     std::string to_base58() const;
 
     inline bool operator <(const public_key& other) const

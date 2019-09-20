@@ -75,7 +75,7 @@ bool public_key::is_set() const
     return false;
 }
 
-bool public_key::verify_signature(unsigned char* msg, size_t msg_sz, unsigned char* _signature) const
+bool public_key::verify_signature(const unsigned char* msg, size_t msg_sz, const unsigned char* _signature) const
 {
     return waves_verify_message(_data, msg, msg_sz, _signature);
 }
