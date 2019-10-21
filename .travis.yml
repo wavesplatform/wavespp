@@ -28,6 +28,12 @@ matrix:
           - $HOME/Library/Caches/Homebrew
       script: cmake -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1 . && make && make test
 
+before_script:
+    - git clone git@github.com:wavesplatform/waves-c.git
+    - cd waves-c
+    - mkdir build && cd build
+    - cmake ..
+    - make && make install
 
 before_install:
     - eval "${MATRIX_EVAL}"
