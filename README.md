@@ -1,4 +1,4 @@
-[![pipeline status](https://giteg.usrsrc.ru/backend/wavespp/badges/master/pipeline.svg)](https://giteg.usrsrc.ru/backend/wavespp/commits/master)
+[![Build Status](https://travis-ci.org/wavesplatform/wavespp.svg?branch=master)](https://travis-ci.org/wavesplatform/wavespp)
 
 # About
 
