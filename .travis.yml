@@ -1,0 +1,33 @@
+language: c
+compiler: clang
+
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-8
+          packages:
+            - clang
+      env:
+        - MATRIX_EVAL="CC=clang && CXX=clang++"
+      cache:
+        apt: true
+        ccache: true
+      script: cmake . && make && make test
+
+    - os: osx
+      osx_image: xcode9.2
+      env:
+        - MATRIX_EVAL="brew update && brew install openssl@1.1 ccache && export PATH=\"/usr/local/opt/ccache/libexec:$PATH\""
+      cache:
+        ccache: true
+        directories:
+          - $HOME/Library/Caches/Homebrew
+      script: cmake -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1 . && make && make test
+
+
+before_install:
+    - eval "${MATRIX_EVAL}"
