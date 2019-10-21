@@ -13,7 +13,7 @@ build:
      - rm -rf src/waves-c
      - mkdir -p src/waves-c
      - cd src/waves-c
-     - git clone https://git@github.com/qbcir/waves-c.git .
+     - git clone https://git@github.com/wavesplatform/waves-c.git .
      - cmake -DCMAKE_BUILD_TYPE=Debug .
      - make -j4
      - make package
