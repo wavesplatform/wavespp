@@ -1,6 +1,6 @@
 #include "sponsorship.hpp"
 
-namespace waves {
+namespace wavespp {
 
 SponsorshipTransaction::Builder::Builder() :
     Transaction::Builder({

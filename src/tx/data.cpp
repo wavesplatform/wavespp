@@ -1,6 +1,6 @@
 #include "data.hpp"
 
-namespace waves {
+namespace wavespp {
 
 DataValue::DataValue(bool v)
 {

@@ -1,7 +1,7 @@
 #include "mass_transfer.hpp"
 #include "utils.hpp"
 
-namespace waves {
+namespace wavespp {
 
 Transfer::Transfer(const std::string& alias_, tx_amount_t amount_, bool is_alias) :
     _is_alias(is_alias),

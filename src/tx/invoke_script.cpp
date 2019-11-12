@@ -5,7 +5,7 @@
 #include "invoke_script.hpp"
 #include "../utils.hpp"
 
-namespace waves {
+namespace wavespp {
 
 Payment::Payment(const std::string& asset_id_, tx_amount_t amount_) :
     asset_id(asset_id_),
@@ -102,7 +102,7 @@ TransactionPtr InvokeScriptTransaction::Builder::build()
     }
     else
     {
-        auto address = waves::utils::secure_hash_to_address(_dapp_public_key_hash, _chain_id);
+        auto address = wavespp::utils::secure_hash_to_address(_dapp_public_key_hash, _chain_id);
         waves_tx_set_address_bytes(&tx->data.invoke_script.d_app.data.address, address.c_str());
     }
     if (!_fee_asset_id.empty())

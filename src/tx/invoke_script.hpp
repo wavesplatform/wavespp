@@ -6,7 +6,7 @@
 
 #include "base.hpp"
 
-namespace waves {
+namespace wavespp {
 
 struct Payment
 {

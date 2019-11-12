@@ -1,6 +1,6 @@
 #include "exchange.hpp"
 
-namespace waves {
+namespace wavespp {
 
 ExchangeTransaction::Builder::Builder() :
     Transaction::Builder({

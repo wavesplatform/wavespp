@@ -7,7 +7,7 @@
 #include <waves/b58.h>
 #include <coda/error.hpp>
 
-namespace waves {
+namespace wavespp {
 
 BuilderFlagsChecker::BuilderFlagsChecker(std::initializer_list<BuilderFlags> flags_)
 {

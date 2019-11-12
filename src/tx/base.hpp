@@ -8,7 +8,7 @@
 
 #include "waves/tx.h"
 
-namespace waves {
+namespace wavespp {
 
 enum class BuilderFlags
 {

@@ -1,6 +1,6 @@
 #include "alias.hpp"
 
-namespace waves {
+namespace wavespp {
 
 AliasTransaction::Builder::Builder() :
     Transaction::Builder({

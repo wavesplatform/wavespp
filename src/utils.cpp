@@ -3,7 +3,7 @@
 #include <waves/b64.h>
 #include <waves/crypto.h>
 
-namespace waves {
+namespace wavespp {
 namespace utils {
 
 std::string to_base58(const unsigned char* v, size_t len)

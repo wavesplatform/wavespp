@@ -1,6 +1,6 @@
 #include "burn.hpp"
 
-namespace waves {
+namespace wavespp {
 
 BurnTransaction::Builder::Builder() :
     Transaction::Builder({

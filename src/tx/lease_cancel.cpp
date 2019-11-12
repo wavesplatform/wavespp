@@ -1,6 +1,6 @@
 #include "lease_cancel.hpp"
 
-namespace waves {
+namespace wavespp {
 
 LeaseCancelTransaction::Builder::Builder() :
     Transaction::Builder({

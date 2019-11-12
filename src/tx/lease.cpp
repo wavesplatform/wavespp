@@ -1,7 +1,7 @@
 #include "lease.hpp"
 #include "utils.hpp"
 
-namespace waves {
+namespace wavespp {
 
 LeaseTransaction::Builder::Builder() :
     Transaction::Builder({
@@ -69,7 +69,7 @@ TransactionPtr LeaseTransaction::Builder::build()
     }
     else
     {
-        auto address = waves::utils::secure_hash_to_address(_recipient_public_key_hash, _chain_id);
+        auto address = wavespp::utils::secure_hash_to_address(_recipient_public_key_hash, _chain_id);
         waves_tx_set_address_bytes(&tx->data.lease.recipient.data.address, address.c_str());
     }
     tx->data.lease.fee = _fee;

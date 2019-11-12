@@ -1,6 +1,6 @@
 #include "set_script.hpp"
 
-namespace waves {
+namespace wavespp {
 
 SetScriptTransaction::Builder::Builder() :
     Transaction::Builder({

@@ -6,8 +6,8 @@
 #include "../src/address.hpp"
 #include "../src/tx/mass_transfer.hpp"
 
-using waves::utils::from_base58;
-using waves::utils::to_base58;
+using wavespp::utils::from_base58;
+using wavespp::utils::to_base58;
 
 constexpr char hexmap[] = {'0', '1', '2', '3', '4', '5', '6', '7',
                            '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
@@ -104,7 +104,7 @@ static int simple_test()//{{{
     const uint64_t amount1 = 100000L;
     const uint64_t amount2 = 123456L;
 
-    waves::MassTransferTransaction::Builder builder;
+    wavespp::MassTransferTransaction::Builder builder;
     builder
         .setAssetId(asset_id)
         .setFee(fee)
@@ -143,7 +143,7 @@ static int simple_test()//{{{
 int hundred_transfers_test()
 {
 
-    waves::MassTransferTransaction::Builder builder;
+    wavespp::MassTransferTransaction::Builder builder;
 
     // https://wavesexplorer.com/testnet/tx/CRDtQ3TQ8WvkM9J8Zq7c3ep1J3n1GqvZM7bErL31gCeq
 
