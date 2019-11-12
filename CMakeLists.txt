@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.9)
 
-set(PROJECT_VERSION_STRING 1.0.6.1)
-set(PROJECT_VERSION_NUMBER 0x01000601)
+set(PROJECT_VERSION_STRING 1.0.6.2)
+set(PROJECT_VERSION_NUMBER 0x01000602)
 project(wavespp
     VERSION "${PROJECT_VERSION_STRING}"
     DESCRIPTION "C++ library to work with waves transactions"
@@ -61,7 +61,7 @@ install(TARGETS wavespp wavespp_shared
 )
 
 if(NOT CMAKE_DOC_DIR)
-    set(CMAKE_DOC_DIR share/doc/waves)
+    set(CMAKE_DOC_DIR share/doc/wavespp)
 endif(NOT CMAKE_DOC_DIR)
 if(NOT CMAKE_CONFIG_DIR)
     set(CMAKE_CONFIG_DIR etc/waves)
