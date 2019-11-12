@@ -4,7 +4,7 @@
 #include "base.hpp"
 #include "order.hpp"
 
-namespace waves {
+namespace wavespp {
 
 class ExchangeTransaction : public Transaction
 {

@@ -1,6 +1,6 @@
 #include "issue.hpp"
 
-namespace waves {
+namespace wavespp {
 
 IssueTransaction::Builder::Builder() :
     Transaction::Builder({

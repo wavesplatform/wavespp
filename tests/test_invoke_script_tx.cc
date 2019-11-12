@@ -8,10 +8,10 @@
 #include "../src/utils.hpp"
 #include "../src/tx/invoke_script.hpp"
 
-using waves::utils::from_base58;
-using waves::utils::to_base58;
-using waves::utils::hex2bin;
-using waves::utils::bin2hex;
+using wavespp::utils::from_base58;
+using wavespp::utils::to_base58;
+using wavespp::utils::hex2bin;
+using wavespp::utils::bin2hex;
 
 static int test_func_call_serialization()//{{{
 {
@@ -21,7 +21,7 @@ static int test_func_call_serialization()//{{{
     const char* expected_arg0 = "31KuAvrq2PsiQZL1dqZKFZyNYAfgpLchK99XiGmZXUg3";
     const char* expected_arg1 = "base64:W6LAllyAaOmtHi8ixFXBUvmzact63Xowv5F7kKpCZUCA0OcSzpzNyGiwKCxgJi6KToe83USFV4KAYT33z9iLRpuCy/GL5qIT7H3HqIraa7R/naxV+vjStXFd6akwFcYglpChcTUXYB2TU/SspH5ONlTG6FZmDBQxGwCHznrvDeVkkWfdcfLkyJ5tSrYzP8VlRDBcwuun4oX6b1fotNXJrrFNG7Ht/E14boxfkZ8E2BlWCttKOgE8ZsdrVqOx8uTb4KNAFZJQ2z/3op4zNHu22mcseJMFEA3N80ryDeo/e072iqoWTCmSi68LNE+KaR/sFV4uEPkl0Gp9tQwyWXSweg==";
 
-    waves::InvokeScriptTransaction::Builder builder;
+    wavespp::InvokeScriptTransaction::Builder builder;
     builder
         .setVersion(1)
         .setChainId(84)
@@ -40,7 +40,7 @@ static int test_func_call_serialization()//{{{
     const auto bytes_len = bytes_vec.size();
     auto&& tx_bytes_base58 = to_base58(bytes, bytes_len);
 
-    const auto invoke_script_tx_ptr = reinterpret_cast<waves::InvokeScriptTransaction*>(tx.get());
+    const auto invoke_script_tx_ptr = reinterpret_cast<wavespp::InvokeScriptTransaction*>(tx.get());
     const auto fc = invoke_script_tx_ptr->function_call();
     const auto func_name = fc.func_name();
     const auto args_json = fc.args_json();
@@ -123,7 +123,7 @@ Tx bytes in hex:
 0000016c0022286e // timestamp
 #endif
 
-    waves::InvokeScriptTransaction::Builder builder;
+    wavespp::InvokeScriptTransaction::Builder builder;
     builder
         .setVersion(1)
         .setChainId(84)
@@ -143,7 +143,7 @@ Tx bytes in hex:
     const auto bytes_len = bytes_vec.size();
     auto&& tx_bytes_base58 = to_base58(bytes, bytes_len);
 
-    const auto itx = std::static_pointer_cast<waves::InvokeScriptTransaction>(tx);
+    const auto itx = std::static_pointer_cast<wavespp::InvokeScriptTransaction>(tx);
     const auto fcall = itx->function_call();
     const auto func_name = fcall.func_name();
     const auto args = fcall.args_json();
@@ -185,7 +185,7 @@ Tx bytes in hex:
 
 static int test_non_default_func_name_serialization()
 {
-    waves::InvokeScriptTransaction::Builder builder;
+    wavespp::InvokeScriptTransaction::Builder builder;
 
     const char* expected_tx_id = "GphqcrFugbzMF9BVEgt1xqwRZirBi6jxKcRbjmbtaUaT";
     const char* expected_func_name = "stateChange";
@@ -210,7 +210,7 @@ static int test_non_default_func_name_serialization()
     const auto bytes_len = bytes_vec.size();
     auto&& tx_bytes_base58 = to_base58(bytes, bytes_len);
 
-    const auto itx = std::static_pointer_cast<waves::InvokeScriptTransaction>(tx);
+    const auto itx = std::static_pointer_cast<wavespp::InvokeScriptTransaction>(tx);
     const auto fcall = itx->function_call();
     const auto func_name = fcall.func_name();
     const auto args = fcall.args_json();

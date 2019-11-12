@@ -6,7 +6,7 @@
 #include "coda/error.hpp"
 #include "utils.hpp"
 
-namespace waves {
+namespace wavespp {
 
 struct base58_decode_exception : std::exception
 {
@@ -126,20 +126,20 @@ struct signature
 namespace std {
 
 template<>
-struct hash<waves::address>
+struct hash<wavespp::address>
 {
-    size_t operator() (const waves::address& addr) const
+    size_t operator() (const wavespp::address& addr) const
     {
-        return waves::utils::hash_bytes(addr._data, sizeof(addr._data));
+        return wavespp::utils::hash_bytes(addr._data, sizeof(addr._data));
     }
 };
 
 template<>
-struct hash<waves::public_key>
+struct hash<wavespp::public_key>
 {
-    size_t operator() (const waves::public_key& pk) const
+    size_t operator() (const wavespp::public_key& pk) const
     {
-        return waves::utils::hash_bytes(pk._data, sizeof(pk._data));
+        return wavespp::utils::hash_bytes(pk._data, sizeof(pk._data));
     }
 };
 

@@ -1,6 +1,6 @@
 #include "reissue.hpp"
 
-namespace waves {
+namespace wavespp {
 
 ReissueTransaction::Builder::Builder() :
     Transaction::Builder({

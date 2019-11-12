@@ -3,7 +3,7 @@
 
 #include "base.hpp"
 
-namespace waves {
+namespace wavespp {
 
 class LeaseCancelTransaction : public Transaction
 {

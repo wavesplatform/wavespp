@@ -4,7 +4,7 @@
 #include "base.hpp"
 #include <vector>
 
-namespace waves {
+namespace wavespp {
 
 struct DataValue
 {

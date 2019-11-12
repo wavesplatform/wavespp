@@ -4,7 +4,7 @@
 #include <coda/error.hpp>
 #include <stdio.h>
 
-namespace waves {
+namespace wavespp {
 
 base58_decode_exception::base58_decode_exception(const std::string& str, size_t pos) :
     _orig_b58(str),

@@ -3,8 +3,8 @@
 #include "../src/utils.hpp"
 #include "../src/tx/exchange.hpp"
 
-using waves::utils::from_base58;
-using waves::utils::to_base58;
+using wavespp::utils::from_base58;
+using wavespp::utils::to_base58;
 
 int main()
 {
@@ -12,9 +12,9 @@ int main()
     // curl -X GET --header 'Accept: application/json' 'https://testnet1.wavesnodes.com/transactions/info/DjnFyQ78s4baaTS4hbA6n5S9SWsJKqtrivFo2mqRjHCD'
     const char* expected_tx_id = "DjnFyQ78s4baaTS4hbA6n5S9SWsJKqtrivFo2mqRjHCD";
 
-    waves::ExchangeTransaction::Builder builder;
-    waves::OrderBuilder order_builder1;
-    waves::OrderBuilder order_builder2;
+    wavespp::ExchangeTransaction::Builder builder;
+    wavespp::OrderBuilder order_builder1;
+    wavespp::OrderBuilder order_builder2;
 
     const std::vector<std::string> proofs1 = {
         from_base58("55qCwCYwpuYfoy5nqZhzc8Ww3bbqEvha3TQG2zL6dmQ46FA8ZbhmK8T2hJ5FZUatFYt42geFrtY5oM3Qgg7Vn6qi")
@@ -41,7 +41,7 @@ int main()
 
     order_builder1
         .setVersion(order_version)
-        .setOrderType(waves::OrderType::BUY)
+        .setOrderType(wavespp::OrderType::BUY)
         .setSenderPublicKey(sender_public_key)
         .setMatcherPublicKey(matcher_public_key)
         .setAmountAssetId(amount_asset_id)
@@ -55,7 +55,7 @@ int main()
 
     order_builder2
         .setVersion(order_version)
-        .setOrderType(waves::OrderType::SELL)
+        .setOrderType(wavespp::OrderType::SELL)
         .setSenderPublicKey(sender_public_key)
         .setMatcherPublicKey(matcher_public_key)
         .setAmountAssetId(amount_asset_id)

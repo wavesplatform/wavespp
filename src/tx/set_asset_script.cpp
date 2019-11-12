@@ -1,6 +1,6 @@
 #include "set_asset_script.hpp"
 
-namespace waves {
+namespace wavespp {
 
 SetAssetScriptTransaction::Builder::Builder() :
     Transaction::Builder({

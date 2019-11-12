@@ -1,6 +1,6 @@
 #include "order.hpp"
 
-namespace waves {
+namespace wavespp {
 
 OrderBuilder::OrderBuilder() :
     _flags({
